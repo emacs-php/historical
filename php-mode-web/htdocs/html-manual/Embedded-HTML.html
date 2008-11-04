@@ -3,13 +3,13 @@
 <title>Embedded HTML - PHP Mode Manual</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="PHP Mode Manual">
-<meta name="generator" content="makeinfo 4.8">
+<meta name="generator" content="makeinfo 4.11">
 <link title="Top" rel="start" href="index.html#Top">
 <link rel="prev" href="Customization.html#Customization" title="Customization">
 <link rel="next" href="Contributors.html#Contributors" title="Contributors">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-This manual documents PHP mode version 1.4.0 for
+This manual documents PHP mode version 1.5.0 for
 use with GNU Emacs.
 
 Copyright (C) 2008  Aaron S. Hawley
@@ -28,9 +28,13 @@ Copyright (C) 2008  Aaron S. Hawley
 The document was typeset with
 GNU Texinfo (http://www.texinfo.org/).
 
-$Date: 2008-01-03 20:50:20 -0500 (Thu, 03 Jan 2008) $
+$Date: 2008-11-04 11:51:51 -0500 (Tue, 04 Nov 2008) $
 
-$Revision: 30 $-->
+$Revision: 90 $
+
+
+
+-->
 <meta http-equiv="Content-Style-Type" content="text/css">
 <style type="text/css"><!--
   pre.display { font-family:inherit }
@@ -56,21 +60,25 @@ Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
 
 <h2 class="appendix">Appendix A Embedded HTML</h2>
 
-<p><a name="index-markup-formats-216"></a><a name="index-XML-217"></a><a name="index-SGML-218"></a><a name="index-embedded-code-219"></a><a name="index-indentation-220"></a><a name="index-HTML-221"></a><a name="index-php_002dmode-222"></a><a name="index-M_002dx-php_002dmode-223"></a>The PHP programming language is commonly embedded with HTML
+<!-- Someday, there will be a decisive way to work on PHP and -->
+<!-- HTML markup together.  For now, it's not decided.  This -->
+<!-- section offers some workarounds and offers some -->
+<!-- suggestions. -->
+<p><a name="index-markup-formats-289"></a><a name="index-XML-290"></a><a name="index-SGML-291"></a><a name="index-embedded-code-292"></a><a name="index-indentation_002c-markup-293"></a><a name="index-HTML-294"></a>The PHP programming language is commonly embedded with HTML
 but also with other markup formats.  Unfortunately, PHP mode
 is currently unable to recognize these other bits and
-provide commands that behave appropriately.  Other modes for
-Emacs for properly indenting are available, including HTML
-mode, SGML mode and XML mode.
+provide commands that behave appropriately.  Other Emacs
+modes for properly indenting HTML include HTML mode, SGML
+mode and XML mode.
 
-   <p><a name="index-html_002dmode-224"></a><a name="index-php_002dmode-225"></a>For example, when editing the HTML sections found in a PHP
+   <p><a name="index-php_002dmode-295"></a><a name="index-M_002dx-php_002dmode-296"></a><a name="index-html_002dmode-297"></a><a name="index-M_002dx-html_002dmode-298"></a>For example, when editing the HTML sections found in a PHP
 file, consider turning on HTML mode with <kbd>M-x
 html-mode</kbd>.  Use the the mode-specific commands for
 manipulating the HTML.  When finished, turn back on PHP mode
-with <kbd>M-x php-mode</kbd> to return working on the PHP sections
-of the file.
+with <kbd>M-x php-mode</kbd> to return working on the PHP
+sections of the file.
 
-   <p><a name="index-multiple-major-mode-226"></a><a name="index-mumamo-227"></a><a name="index-mmm_002dmode-228"></a><a name="index-multi_002dmode-229"></a>Alternatively, consider using a <dfn>multiple major mode</dfn>
+   <p><a name="index-multiple-major-mode-299"></a><a name="index-mumamo-300"></a><a name="index-mmm_002dmode-301"></a><a name="index-multi_002dmode-302"></a>Alternatively, consider using a <dfn>multiple major mode</dfn>
 like mumamo, mmm-mode or multi-mode.  These modes allow a
 single buffer to appoint different major modes to respective
 portions of the buffer.

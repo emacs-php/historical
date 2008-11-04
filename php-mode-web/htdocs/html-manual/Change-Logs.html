@@ -3,13 +3,13 @@
 <title>Change Logs - PHP Mode Manual</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="PHP Mode Manual">
-<meta name="generator" content="makeinfo 4.8">
+<meta name="generator" content="makeinfo 4.11">
 <link title="Top" rel="start" href="index.html#Top">
 <link rel="prev" href="Index-Menu.html#Index-Menu" title="Index Menu">
 <link rel="next" href="Speedbar.html#Speedbar" title="Speedbar">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-This manual documents PHP mode version 1.4.0 for
+This manual documents PHP mode version 1.5.0 for
 use with GNU Emacs.
 
 Copyright (C) 2008  Aaron S. Hawley
@@ -28,9 +28,13 @@ Copyright (C) 2008  Aaron S. Hawley
 The document was typeset with
 GNU Texinfo (http://www.texinfo.org/).
 
-$Date: 2008-01-03 20:50:20 -0500 (Thu, 03 Jan 2008) $
+$Date: 2008-11-04 11:51:51 -0500 (Tue, 04 Nov 2008) $
 
-$Revision: 30 $-->
+$Revision: 90 $
+
+
+
+-->
 <meta http-equiv="Content-Style-Type" content="text/css">
 <style type="text/css"><!--
   pre.display { font-family:inherit }
@@ -54,28 +58,48 @@ Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
 <hr>
 </div>
 
-<h2 class="chapter">10 Change Logs</h2>
+<h2 class="chapter">11 Change Logs</h2>
 
-<p>PHP mode can help generate <samp><span class="file">ChangeLog</span></samp> files, a
+<p><a name="index-php_002dbeginning_002dof_002ddefun_002dregexp-270"></a><a name="index-add_002dlog_002dcurrent_002ddefun_002dheader_002dregexp-271"></a><!-- This is documented, because PHP mode explicitly supports -->
+<!-- the features of add-log by setting the value for the -->
+<!-- add-log-current-defun-header-regexp to -->
+<!-- php-beginning-of-defun-regexp.  This feature is -->
+<!-- documented in the PHP manual, but it is worth advertising -->
+<!-- to PHP programmers. -->
+
+   <p><a name="index-ChangeLog-272"></a><a name="index-file_002c-ChangeLog-273"></a>PHP mode can help generate <samp><span class="file">ChangeLog</span></samp> files, a
 widely-adopted format for documenting the changes made to
-source code, especially software.  PHP mode and Emacs will
+source code&ndash;especially software.  PHP mode and Emacs will
 determine the current function, file name, author
 information and date and use it all to prepare a properly
-formatted entry for the file.
+formatted <samp><span class="file">ChangeLog</span></samp> entry in the file.
 
-   <p>The <code>add-change-log-entry</code> commands can be run from
+   <p><a name="index-Diff-mode-274"></a><a name="index-diff-file-275"></a><a name="index-file_002c-diff-276"></a><a name="index-patch-file-277"></a><a name="index-file_002c-patch-278"></a><a name="index-add_002dchange_002dlog_002dentry-279"></a>The <code>add-change-log-entry</code> commands can be run from
 within a buffer containing a PHP buffer, or from a buffer in
 Diff mode with a revision patch to a PHP source file. 
 See <a href="http://emacswiki.org/cgi-bin/info-ref?find=Diff-Mode.html#Diff-Mode">Diff Mode</a>.
 
-     <dl>
-<dt><kbd>C-x 4 a</kbd><dd>Add an entry in a ChangeLog file opened in another window,
-or add a new line to the already begun entry
+     
+<a name="index-ChangeLog-entry-280"></a>
+<a name="index-add-ChangeLog-entry-281"></a>
+<a name="index-add_002dchange_002dlog_002dentry_002dother_002dwindow-282"></a>
+<a name="index-C_002dx-4-a-283"></a>
+<dl><dt><kbd>C-x 4 a</kbd><dd>Add an entry in a <samp><span class="file">ChangeLog</span></samp> file opened in another
+window, or add a new line to the already begun entry
 (<code>add-change-log-entry-other-window</code>).  Provides the
 file name and the respective function name, when applicable,
-for the current point
+for the current point.  The point can be in a PHP source
+file, or in the hunk of a diff file.<a rel="footnote" href="#fn-1" name="fnd-1"><sup>1</sup></a>  This
+command will also add the current author and date to the
+entry.
 
    </dl>
+
+   <div class="footnote">
+<hr>
+<h4>Footnotes</h4><p class="footnote"><small>[<a name="fn-1" href="#fnd-1">1</a>]</small> See <a href="http://emacswiki.org/cgi-bin/info-ref?find=Diff-Mode.html#Diff-Mode">Diff Mode</a>.</p>
+
+   <hr></div>
 
    </body></html>
 
