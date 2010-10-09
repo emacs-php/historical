@@ -39,7 +39,7 @@
 	example .emacs bits for Imenu support.
 	(Change Logs): Markup "Diff mode" in a @dfn.  Try better
 	documenting C-x 4 a.
-	
+
 2008-11-04  Aaron S. Hawley  <ashawley-@-sourceforge.net>
 
 	* Makefile (version): Change to 1.5.0 for release.
@@ -72,7 +72,7 @@
 	(php-default-face, font-lock-keyword-face)
 	(font-lock-constant-face): Remove conditional bindings and XEmacs
 	code that likely does nothing.
-	
+
 2008-10-23  Aaron S. Hawley  <ashawley-@-sourceforge.net>
 
 	* php-mode.el (php-imenu-generic-expression): Reverse order of
