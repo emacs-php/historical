@@ -143,6 +143,13 @@ Turning this on will open it whenever `php-mode' is loaded."
            (speedbar 1)))
   :group 'php)
 
+(defvar php-mode-syntax-table
+  (let ((table (make-syntax-table)))
+    (modify-syntax-entry ?\\ "_" table)
+    table))
+
+(set-syntax-table php-mode-syntax-table)
+
 (defvar php-imenu-generic-expression
   '(
     ("Private Methods"
