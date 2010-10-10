@@ -128,7 +128,7 @@ Ignores php-file patterns option; fixed to expression \"\\.\\(inc\\|php[s34]?\\)
   :type 'boolean
   :set (lambda (sym val)
          (set-default sym val)
-         (if (and val (boundp 'speedbar))
+         (if (and val (fboundp 'speedbar))
              (speedbar-add-supported-extension
               "\\.\\(inc\\|php[s34]?\\|phtml\\)")))
   :group 'php)
