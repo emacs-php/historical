@@ -1025,7 +1025,7 @@ current `tags-file-name'."
     ;; thereby excluding it from unknown-symbol checks later
     ;; FIX to handle implementing multiple
     ;; currently breaks on "class Foo implements Bar, Baz"
-    '("\\<\\(new\\|extends\\|implements\\)\\s-+\\$?\\(\\sw+\\)"
+    '("\\<\\(new\\|extends\\|implements\\|clone\\)\\s-+\\$?\\(\\sw+\\)"
       (1 font-lock-keyword-face) (2 font-lock-type-face))
 
     ;; function declaration
