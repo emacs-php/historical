@@ -1018,6 +1018,10 @@ current `tags-file-name'."
    php-font-lock-keywords-1
    (list
 
+    ;; namespace/use declaration
+    '("\\<\\(namespace\\|use\\)\\s-+\\(\\$\\|\\\\\\)?\\(\\sw+\\)"
+      (1 font-lock-keyword-face) (3 font-lock-type-face))
+
     ;; class declaration
     '("\\<\\(class\\|interface\\)\\s-+\\(\\sw+\\)?"
       (1 font-lock-keyword-face) (2 font-lock-type-face nil t))
@@ -1025,8 +1029,8 @@ current `tags-file-name'."
     ;; thereby excluding it from unknown-symbol checks later
     ;; FIX to handle implementing multiple
     ;; currently breaks on "class Foo implements Bar, Baz"
-    '("\\<\\(new\\|extends\\|implements\\|clone\\)\\s-+\\$?\\(\\sw+\\)"
-      (1 font-lock-keyword-face) (2 font-lock-type-face))
+    '("\\<\\(new\\|extends\\|implements\\|clone\\)\\s-+\\(\\$\\|\\\\\\)?\\(\\sw+\\)"
+      (1 font-lock-keyword-face) (3 font-lock-type-face))
 
     ;; function declaration
     '("\\<\\(function\\)\\s-+&?\\(\\sw+\\)\\s-*("
@@ -1100,6 +1104,7 @@ current `tags-file-name'."
     '("->\\(\\sw+\\)\\s-*(" . (1 php-default-face t t)) ;; ->function_call
     '("\\(\\sw+\\)::\\sw+\\s-*(?" . (1 font-lock-type-face)) ;; class::member
     '("::\\(\\sw+\\>[^(]\\)" . (1 php-default-face)) ;; class::constant
+    '("\\(\\sw*\\)\\\\\\(\\sw+\\)" (1 font-lock-type-face) (2 font-lock-type-face)) ;; \namespace
     '("\\<\\sw+\\s-*[[(]" . php-default-face) ;; word( or word[
     '("\\<[0-9]+" . php-default-face) ;; number (also matches word)
 
