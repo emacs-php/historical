@@ -588,7 +588,7 @@ current `tags-file-name'."
     (regexp-opt
      '(;; core constants
        "__LINE__" "__FILE__"
-       "__FUNCTION__" "__CLASS__" "__METHOD__"
+       "__FUNCTION__" "__CLASS__" "__METHOD__" "__NAMESPACE__"
        "PHP_OS" "PHP_VERSION"
        "TRUE" "FALSE" "NULL"
        "E_ERROR" "E_NOTICE" "E_PARSE" "E_WARNING" "E_ALL" "E_STRICT"
