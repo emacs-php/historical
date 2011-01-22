@@ -1063,14 +1063,14 @@ current `tags-file-name'."
     ;;'("</?\\sw+[^> ]*>" . font-lock-constant-face)
     ;;'("</?\\sw+[^>]*" . font-lock-constant-face)
     ;;'("<!DOCTYPE" . font-lock-constant-face)
-    '("</?[a-z!:]+" . font-lock-constant-face)
+    ;; '("</?[a-z!:]+" . font-lock-constant-face)
 
     ;; HTML >
-    '("<[^>]*\\(>\\)" (1 font-lock-constant-face))
+    ;; '("<[^>]*\\(>\\)" (1 font-lock-constant-face))
 
     ;; HTML tags
-    '("\\(<[a-z]+\\)[[:space:]]+\\([a-z:]+=\\)[^>]*?" (1 font-lock-constant-face) (2 font-lock-constant-face) )
-    '("\"[[:space:]]+\\([a-z:]+=\\)" (1 font-lock-constant-face))
+    ;; '("\\(<[a-z]+\\)[[:space:]]+\\([a-z:]+=\\)[^>]*?" (1 font-lock-constant-face) (2 font-lock-constant-face) )
+    ;; '("\"[[:space:]]+\\([a-z:]+=\\)" (1 font-lock-constant-face))
 
     ;; HTML entities
     ;;'("&\\w+;" . font-lock-variable-name-face)
@@ -1109,7 +1109,7 @@ current `tags-file-name'."
     '("\\<[0-9]+" . php-default-face) ;; number (also matches word)
 
     ;; Warn on any words not already fontified
-    '("\\<\\sw+\\>" . font-lock-warning-face)
+    ;; '("\\<\\sw+\\>" . font-lock-warning-face)
 
     ))
   "Gauchy level highlighting for PHP mode.")
