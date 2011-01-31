@@ -1101,7 +1101,7 @@ current `tags-file-name'."
       (1 font-lock-constant-face nil nil)) ;; $_GET & co
     ;; '("\\$\\(\\sw+\\)" (1 font-lock-variable-name-face)) ;; $variable
     ;; '("->\\(\\sw+\\)" (1 font-lock-variable-name-face t t)) ;; ->variable
-    '("->\\(\\sw+\\)\\s-*(" . (1 php-default-face t t)) ;; ->function_call
+    ;; '("->\\(\\sw+\\)\\s-*(" . (1 php-default-face t t)) ;; ->function_call
     '("\\(\\sw+\\)::\\sw+\\s-*(?" . (1 font-lock-type-face)) ;; class::member
     '("::\\(\\sw+\\>[^(]\\)" . (1 php-default-face)) ;; class::constant
     '("\\(\\sw*\\)\\\\\\(\\sw+\\)" (1 font-lock-type-face) (2 font-lock-type-face)) ;; \namespace
