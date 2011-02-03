@@ -1076,13 +1076,13 @@ current `tags-file-name'."
     ;;'("&\\w+;" . font-lock-variable-name-face)
 
     ;; warn about '$' immediately after ->
-    '("\\$\\sw+->\\s-*\\(\\$\\)\\(\\sw+\\)"
-      (1 font-lock-warning-face) (2 php-default-face))
+    ;; '("\\$\\sw+->\\s-*\\(\\$\\)\\(\\sw+\\)"
+    ;;   (1 font-lock-warning-face) (2 php-default-face))
 
     ;; warn about $word.word -- it could be a valid concatenation,
     ;; but without any spaces we'll assume $word->word was meant.
-    '("\\$\\sw+\\(\\.\\)\\sw"
-      1 font-lock-warning-face)
+    ;; '("\\$\\sw+\\(\\.\\)\\sw"
+    ;;   1 font-lock-warning-face)
 
     ;; Warn about ==> instead of =>
     '("==+>" . font-lock-warning-face)
