@@ -1026,7 +1026,7 @@ current `tags-file-name'."
       (1 font-lock-keyword-face) (2 font-lock-type-face nil t))
 
     ;; implements
-    '("\\<\\(implements\\)\\s-+\\(\\sw+\\)?\\(,\\s-+\\sw+\\)?\\(,\\s-+\\sw+\\)?\\(,\\s-+\\sw+\\)?\\(,\\s-+\\sw+\\)?"
+    '("\\<\\(implements\\)\\s-+\\(\\sw+\\)?,?\\(\\s-+\\sw+\\)?,?\\(\\s-+\\sw+\\)?,?\\(\\s-+\\sw+\\)?,?\\(\\s-+\\sw+\\)?"
       (1 font-lock-keyword-face)
       (2 font-lock-type-face nil t)
       (3 font-lock-type-face nil t)
@@ -1067,23 +1067,6 @@ current `tags-file-name'."
   (append
    php-font-lock-keywords-2
    (list
-
-    ;; <word> or </word> for HTML
-    ;;'("</?\\sw+[^> ]*>" . font-lock-constant-face)
-    ;;'("</?\\sw+[^>]*" . font-lock-constant-face)
-    ;;'("<!DOCTYPE" . font-lock-constant-face)
-    ;; '("</?[a-z!:]+" . font-lock-constant-face)
-
-    ;; HTML >
-    ;; '("<[^>]*\\(>\\)" (1 font-lock-constant-face))
-
-    ;; HTML tags
-    ;; '("\\(<[a-z]+\\)[[:space:]]+\\([a-z:]+=\\)[^>]*?" (1 font-lock-constant-face) (2 font-lock-constant-face) )
-    ;; '("\"[[:space:]]+\\([a-z:]+=\\)" (1 font-lock-constant-face))
-
-    ;; HTML entities
-    ;;'("&\\w+;" . font-lock-variable-name-face)
-
     ;; warn about '$' immediately after ->
     ;; '("\\$\\sw+->\\s-*\\(\\$\\)\\(\\sw+\\)"
     ;;   (1 font-lock-warning-face) (2 php-default-face))
