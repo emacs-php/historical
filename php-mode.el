@@ -2,12 +2,13 @@
 
 ;; Copyright (C) 1999, 2000, 2001, 2003, 2004 Turadg Aleahmad
 ;;               2008 Aaron S. Hawley
+;;               2011 Ranko Radonic
 
-;; Maintainer: Aaron S. Hawley <ashawley at users.sourceforge.net>
+;; Maintainer: Ranko Radonic
 ;; Author: Turadg Aleahmad, 1999-2004
 ;; Keywords: php languages oop
 ;; Created: 1999-05-17
-;; Modified: 2008-12-12
+;; Modified: 2011-03-10
 ;; X-URL:   http://php-mode.sourceforge.net/
 
 (defconst php-mode-version-number "1.6.0-alpha"
