@@ -145,9 +145,7 @@ Turning this on will open it whenever `php-mode' is loaded."
   :group 'php)
 
 (defvar php-mode-syntax-table
-  (let ((table (make-syntax-table)))
-    (modify-syntax-entry ?\\ "_" table)
-    table))
+  (make-syntax-table))
 
 (set-syntax-table php-mode-syntax-table)
 
