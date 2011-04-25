@@ -25,3 +25,16 @@ You can report any problems that you find on github's integrated issue
 tracker. If you've added some improvements and you want them included
 upstream don't hesitate to send me a patch or, even better, a GitHub
 pull request.
+
+# Authors #
+
+This is a list of people who have contributed to the mode, in
+chronological order from oldest to newest:
+
+Turadg Aleahmad
+
+Aaron S. Hawley
+
+Luka Novsak
+
+Ranko Radonić
