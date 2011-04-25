@@ -2,16 +2,17 @@
 
 ;; Copyright (C) 1999, 2000, 2001, 2003, 2004 Turadg Aleahmad
 ;;               2008 Aaron S. Hawley
+;;               2010 Luka Novsak
 ;;               2011 Ranko Radonic
 
 ;; Maintainer: Ranko Radonic
-;; Author: Turadg Aleahmad, 1999-2004
+;; Authors: Turadg Aleahmad, Aaron S. Hawley, Luka Novsak, Ranko Radonic
 ;; Keywords: php languages oop
 ;; Created: 1999-05-17
-;; Modified: 2011-03-10
-;; X-URL:   http://php-mode.sourceforge.net/
+;; Modified: 2011-04-25
+;; X-URL: https://github.com/rradonic/php-mode
 
-(defconst php-mode-version-number "1.6.0-alpha"
+(defconst php-mode-version-number "1.6.1"
   "PHP Mode version number.")
 
 ;;; License
