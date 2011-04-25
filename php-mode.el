@@ -1046,6 +1046,10 @@ current `tags-file-name'."
       (1 font-lock-keyword-face)
       (2 font-lock-function-name-face nil t))
 
+    ;; anonymous function declaration
+    '("\\<\\(function\\)\\s-*("
+      (1 font-lock-keyword-face))
+
     ;; class hierarchy
     '("\\<\\(self\\|parent\\)\\>" (1 font-lock-constant-face nil nil))
 
