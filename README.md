@@ -14,8 +14,8 @@ use ~/.emacs.d/php-mode).
 
 Then add something like this to your .emacs configuration:
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/php-mode"))
-(require 'php-mode)
+    (add-to-list 'load-path (expand-file-name "~/.emacs.d/php-mode"))
+    (require 'php-mode)
 
 And you're off to the races!
 
