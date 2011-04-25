@@ -1,10 +1,11 @@
 # About #
 
-This mode is derived from Aaron S. Hawley's original php-mode for
-emacs. Several other people on github have forks with various
-enhancements to the original. I am building on these, and adding
-improvements of my own in order to fix various bugs, as well as bring
-the mode up to date with new versions of PHP.
+This mode is derived from the [original php-mode for
+emacs](http://php-mode.sourceforge.net/). Several other people on
+github have forks with various enhancements to the original. I am
+building on these, and adding improvements of my own in order to fix
+various bugs, as well as bring the mode up to date with new versions
+of PHP.
 
 # Installation #
 
