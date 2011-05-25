@@ -4,12 +4,13 @@
 ;;               2008 Aaron S. Hawley
 ;;               2010 Luka Novsak
 ;;               2011 Ranko Radonic
+;;               2011 Grzegorz Ro¿niecki
 
 ;; Maintainer: Ranko Radonic
-;; Authors: Turadg Aleahmad, Aaron S. Hawley, Luka Novsak, Ranko Radonic
+;; Authors: Turadg Aleahmad, Aaron S. Hawley, Luka Novsak, Ranko Radonic, Grzegorz Ro¿niecki
 ;; Keywords: php languages oop
 ;; Created: 1999-05-17
-;; Modified: 2011-04-25
+;; Modified: 2011-05-25
 ;; X-URL: https://github.com/rradonic/php-mode
 
 (defconst php-mode-version-number "1.6.1"
@@ -218,7 +219,7 @@ Turning this on will force PEAR rules on all PHP files."
   :type 'boolean
   :group 'php)
 
-(defconst php-mode-modified "2008-11-05"
+(defconst php-mode-modified "2011-05-25"
   "PHP Mode build date.")
 
 (defun php-mode-version ()
