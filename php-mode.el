@@ -1030,7 +1030,7 @@ current `tags-file-name'."
     ;; implements
     ;; FIX to handle implementing multiple
     ;; currently breaks on sixth interface
-    '("\\<\\(implements\\)\\s-+\\(\\sw+\\)?,?\\(\\s-+\\sw+\\)?,?\\(\\s-+\\sw+\\)?,?\\(\\s-+\\sw+\\)?,?\\(\\s-+\\sw+\\)?"
+    '("\\<\\(implements\\)\\s-+\\(\\sw+\\)?\\s-*,?\\s-*\\(\\sw+\\)?\\s-*,?\\s-*\\(\\sw+\\)?\\s-*,?\\s-*\\(\\sw+\\)?\\s-*,?\\s-*\\(\\sw+\\)?"
       (1 font-lock-keyword-face)
       (2 font-lock-type-face nil t)
       (3 font-lock-type-face nil t)
