@@ -1020,8 +1020,12 @@ current `tags-file-name'."
    (list
 
     ;; namespace/use declaration
-    '("\\<\\(namespace\\|use\\)\\s-+\\(\\$\\|\\\\\\)?\\(\\sw+\\)"
-      (1 font-lock-keyword-face) (3 font-lock-type-face))
+    '("\\<\\(namespace\\|use\\)\\s-+\\(?:\\$\\|\\\\\\)?\\(\\sw+\\)"
+      (1 font-lock-keyword-face) (2 font-lock-type-face))
+
+    ;; as alias
+    '("\\<\\(as\\)\\s-+\\(\\sw+\\)"
+      (1 font-lock-keyword-face) (2 font-lock-type-face))
 
     ;; class declaration
     '("\\<\\(class\\|interface\\)\\s-+\\(\\sw+\\)?"
