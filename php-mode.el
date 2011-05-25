@@ -957,7 +957,7 @@ current `tags-file-name'."
        "extends" "for" "foreach" "global" "if" "include" "include_once"
        "next" "or" "require" "require_once" "return" "static" "switch"
        "then" "var" "while" "xor" "throw" "catch" "try"
-       "instanceof" "catch all" "finally")))
+       "clone" "catch all" "finally")))
   "PHP keywords.")
 
 (defconst php-identifier
@@ -1027,6 +1027,8 @@ current `tags-file-name'."
       (1 font-lock-keyword-face) (2 font-lock-type-face nil t))
 
     ;; implements
+    ;; FIX to handle implementing multiple
+    ;; currently breaks on sixth interface
     '("\\<\\(implements\\)\\s-+\\(\\sw+\\)?,?\\(\\s-+\\sw+\\)?,?\\(\\s-+\\sw+\\)?,?\\(\\s-+\\sw+\\)?,?\\(\\s-+\\sw+\\)?"
       (1 font-lock-keyword-face)
       (2 font-lock-type-face nil t)
@@ -1037,9 +1039,7 @@ current `tags-file-name'."
 
     ;; handle several words specially, to include following word,
     ;; thereby excluding it from unknown-symbol checks later
-    ;; FIX to handle implementing multiple
-    ;; currently breaks on "class Foo implements Bar, Baz"
-    '("\\<\\(new\\|extends\\|clone\\)\\s-+\\(\\$\\|\\\\\\)?\\(\\sw+\\)"
+    '("\\<\\(new\\|extends\\|instanceof\\)\\s-+\\(\\$\\|\\\\\\)?\\(\\sw+\\)"
       (1 font-lock-keyword-face) (3 font-lock-type-face))
 
     ;; function declaration
