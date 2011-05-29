@@ -4,12 +4,13 @@
 ;;               2008 Aaron S. Hawley
 ;;               2010 Luka Novsak
 ;;               2011 Ranko Radonic
+;;               2011 Grzegorz Ro¿niecki
 
 ;; Maintainer: Ranko Radonic
-;; Authors: Turadg Aleahmad, Aaron S. Hawley, Luka Novsak, Ranko Radonic
+;; Authors: Turadg Aleahmad, Aaron S. Hawley, Luka Novsak, Ranko Radonic, Grzegorz Ro¿niecki
 ;; Keywords: php languages oop
 ;; Created: 1999-05-17
-;; Modified: 2011-04-25
+;; Modified: 2011-05-25
 ;; X-URL: https://github.com/rradonic/php-mode
 
 (defconst php-mode-version-number "1.6.1"
@@ -218,7 +219,7 @@ Turning this on will force PEAR rules on all PHP files."
   :type 'boolean
   :group 'php)
 
-(defconst php-mode-modified "2008-11-05"
+(defconst php-mode-modified "2011-05-25"
   "PHP Mode build date.")
 
 (defun php-mode-version ()
@@ -957,7 +958,7 @@ current `tags-file-name'."
        "extends" "for" "foreach" "global" "if" "include" "include_once"
        "next" "or" "require" "require_once" "return" "static" "switch"
        "then" "var" "while" "xor" "throw" "catch" "try"
-       "instanceof" "catch all" "finally")))
+       "clone" "catch all" "finally")))
   "PHP keywords.")
 
 (defconst php-identifier
@@ -1019,15 +1020,21 @@ current `tags-file-name'."
    (list
 
     ;; namespace/use declaration
-    '("\\<\\(namespace\\|use\\)\\s-+\\(\\$\\|\\\\\\)?\\(\\sw+\\)"
-      (1 font-lock-keyword-face) (3 font-lock-type-face))
+    '("\\<\\(namespace\\|use\\)\\s-+\\(?:\\$\\|\\\\\\)?\\(\\sw+\\)"
+      (1 font-lock-keyword-face) (2 font-lock-type-face))
+
+    ;; as alias
+    '("\\<\\(as\\)\\s-+\\(\\sw+\\)"
+      (1 font-lock-keyword-face) (2 font-lock-type-face))
 
     ;; class declaration
     '("\\<\\(class\\|interface\\)\\s-+\\(\\sw+\\)?"
       (1 font-lock-keyword-face) (2 font-lock-type-face nil t))
 
     ;; implements
-    '("\\<\\(implements\\)\\s-+\\(\\sw+\\)?,?\\(\\s-+\\sw+\\)?,?\\(\\s-+\\sw+\\)?,?\\(\\s-+\\sw+\\)?,?\\(\\s-+\\sw+\\)?"
+    ;; FIX to handle implementing multiple
+    ;; currently breaks on sixth interface
+    '("\\<\\(implements\\)\\s-+\\(\\sw+\\)?\\s-*,?\\s-*\\(\\sw+\\)?\\s-*,?\\s-*\\(\\sw+\\)?\\s-*,?\\s-*\\(\\sw+\\)?\\s-*,?\\s-*\\(\\sw+\\)?"
       (1 font-lock-keyword-face)
       (2 font-lock-type-face nil t)
       (3 font-lock-type-face nil t)
@@ -1037,9 +1044,7 @@ current `tags-file-name'."
 
     ;; handle several words specially, to include following word,
     ;; thereby excluding it from unknown-symbol checks later
-    ;; FIX to handle implementing multiple
-    ;; currently breaks on "class Foo implements Bar, Baz"
-    '("\\<\\(new\\|extends\\|clone\\)\\s-+\\(\\$\\|\\\\\\)?\\(\\sw+\\)"
+    '("\\<\\(new\\|extends\\|instanceof\\)\\s-+\\(\\$\\|\\\\\\)?\\(\\sw+\\)"
       (1 font-lock-keyword-face) (3 font-lock-type-face))
 
     ;; function declaration
