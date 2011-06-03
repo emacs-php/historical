@@ -1023,8 +1023,8 @@ current `tags-file-name'."
     '("\\<\\(namespace\\|use\\)\\s-+\\(?:\\$\\|\\\\\\)?\\(\\sw+\\)"
       (1 font-lock-keyword-face) (2 font-lock-type-face))
 
-    ;; as alias
-    '("\\<\\(as\\)\\s-+\\(\\sw+\\)"
+    ;; as for aliasing namespaces
+    '("\\<\\(as\\)\\s-+\\([^$]\\sw+\\)"
       (1 font-lock-keyword-face) (2 font-lock-type-face))
 
     ;; class declaration
