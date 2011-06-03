@@ -4,10 +4,10 @@
 ;;               2008 Aaron S. Hawley
 ;;               2010 Luka Novsak
 ;;               2011 Ranko Radonic
-;;               2011 Grzegorz Ro¿niecki
+;;               2011 Grzegorz RoÅ¼niecki
 
 ;; Maintainer: Ranko Radonic
-;; Authors: Turadg Aleahmad, Aaron S. Hawley, Luka Novsak, Ranko Radonic, Grzegorz Ro¿niecki
+;; Authors: Turadg Aleahmad, Aaron S. Hawley, Luka Novsak, Ranko Radonic, Grzegorz RoÂ¿niecki
 ;; Keywords: php languages oop
 ;; Created: 1999-05-17
 ;; Modified: 2011-05-25
