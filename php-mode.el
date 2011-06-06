@@ -73,6 +73,10 @@
 
 ;;; Changelog:
 
+;; 1.6
+;;   Support for namespaces. Support for anonymous functions. Support
+;;   for implementing more than one interface in a class. Support for
+;;   namespace aliases.
 ;; 1.5
 ;;   Support function keywords like public, private and the ampersand
 ;;   character for function-based commands.  Support abstract, final,
