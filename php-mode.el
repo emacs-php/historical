@@ -7,10 +7,10 @@
 ;;               2011 Grzegorz Rożniecki
 
 ;; Maintainer: Ranko Radonic
-;; Authors: Turadg Aleahmad, Aaron S. Hawley, Luka Novsak, Ranko Radonic, Grzegorz Ro¿niecki
+;; Authors: Turadg Aleahmad, Aaron S. Hawley, Luka Novsak, Ranko Radonic, Grzegorz Rożniecki
 ;; Keywords: php languages oop
 ;; Created: 1999-05-17
-;; Modified: 2011-05-25
+;; Modified: 2011-07-26
 ;; X-URL: https://github.com/rradonic/php-mode
 
 (defconst php-mode-version-number "1.6.1"
@@ -54,7 +54,7 @@
 
 ;;; Commentary:
 
-;; PHP mode is a major mode for editing PHP 3 and 4 source code.  It's
+;; PHP mode is a major mode for editing PHP source code. It's
 ;; an extension of C mode; thus it inherits all C mode's navigation
 ;; functionality.  But it colors according to the PHP grammar and indents
 ;; according to the PEAR coding guidelines.  It also includes a couple
@@ -74,8 +74,16 @@
 ;;; Changelog:
 
 ;; 1.6
-;;   Support for namespaces. Support for anonymous functions. Support
-;;   for implementing more than one interface in a class. Support for
+;;   Added from http://www.emacswiki.org/emacs/php-mode-improved.el
+;;   New customisation options for 'Gauchy' level of syntax highlighting:
+;;     * `php-mode-dollar-property-warning', which, if non-nil, warns on
+;;       $foo->$bar. (Default is nil.)
+;;     * `php-mode-dot-property-warning', which, if non-nil, warns on
+;;       $foo.bar. (Default is nil.)
+;;     * `php-mode-warn-on-unmatches', which, if non-nil, warns on
+;;       "everything else". (Default is nil.)
+;;   Support for namespaces.  Support for anonymous functions.  Support
+;;   for implementing more than one interface in a class.  Support for
 ;;   namespace aliases.
 ;; 1.5
 ;;   Support function keywords like public, private and the ampersand
@@ -131,13 +139,13 @@
 
 (defcustom php-speedbar-config t
   "When set to true automatically configures Speedbar to observe PHP files.
-Ignores php-file patterns option; fixed to expression \"\\.\\(inc\\|php[s34]?\\)\""
+Ignores php-file patterns option; fixed to expression \"\\.\\(inc\\|php[s345]?\\)\""
   :type 'boolean
   :set (lambda (sym val)
          (set-default sym val)
          (if (and val (fboundp 'speedbar))
              (speedbar-add-supported-extension
-              "\\.\\(inc\\|php[s34]?\\|phtml\\)")))
+              "\\.\\(inc\\|php[s345]?\\|phtml\\)")))
   :group 'php)
 
 (defcustom php-mode-speedbar-open nil
@@ -195,7 +203,7 @@ You can replace \"en\" with your ISO language code."
   :group 'php)
 
 ;;;###autoload
-(defcustom php-file-patterns '("\\.php[s34]?\\'" "\\.phtml\\'" "\\.inc\\'")
+(defcustom php-file-patterns '("\\.php[s345]?\\'" "\\.phtml\\'" "\\.inc\\'")
   "List of file patterns for which to automatically invoke `php-mode'."
   :type '(repeat (regexp :tag "Pattern"))
   :set (lambda (sym val)
@@ -223,7 +231,27 @@ Turning this on will force PEAR rules on all PHP files."
   :type 'boolean
   :group 'php)
 
-(defconst php-mode-modified "2011-05-25"
+(defcustom php-mode-dollar-property-warning nil
+  "If non-`nil', warn about expressions like $foo->$bar where you
+might have meant $foo->bar. Defaults to `nil' since this is valid
+code."
+  :type 'boolean
+  :group 'php)
+
+(defcustom php-mode-dot-property-warning nil
+  "If non-`nil', wan about expressions like $foo.bar, which could
+be a valid concatenation (if bar were a constant, or interpreted
+as an unquoted string), but it's more likely you meant $foo->bar."
+  :type 'boolean
+  :group 'php)
+
+(defcustom php-mode-warn-on-unmatched nil
+  "If non-`nil', use `font-lock-warning-face' on any expression
+that isn't matched by the other font lock regular expressions."
+  :type 'boolean
+  :group 'php)
+
+(defconst php-mode-modified "2011-07-26"
   "PHP Mode build date.")
 
 (defun php-mode-version ()
@@ -330,6 +358,7 @@ See `php-beginning-of-defun'."
   (set (make-local-variable 'c-opt-cpp-prefix) php-tags-key)
 
   (c-set-offset 'cpp-macro 0)
+  (c-set-offset 'case-label '+) ;; make each case/default line indented
 
 ;;   (c-lang-defconst c-block-stmt-1-kwds php php-block-stmt-1-kwds)
 ;;   (c-lang-defvar c-block-stmt-1-kwds (c-lang-const c-block-stmt-1-kwds))
@@ -496,7 +525,7 @@ current `tags-file-name'."
       (set-buffer buf)
       (goto-char (point-min))
       (while (re-search-forward
-              "^\\([-a-zA-Z0-9_.]+\\)\n"
+              "^\\([-a-zA-Z0-9_.]+\\)$"
               nil t)
         (intern (buffer-substring (match-beginning 1) (match-end 1))
                 table)))
@@ -592,7 +621,7 @@ current `tags-file-name'."
   (eval-when-compile
     (regexp-opt
      '(;; core constants
-       "__LINE__" "__FILE__"
+       "__LINE__" "__FILE__" "__DIR__"
        "__FUNCTION__" "__CLASS__" "__METHOD__" "__NAMESPACE__"
        "PHP_OS" "PHP_VERSION"
        "TRUE" "FALSE" "NULL"
@@ -956,12 +985,12 @@ current `tags-file-name'."
   (eval-when-compile
     (regexp-opt
      ;; "class", "new" and "extends" get special treatment
-     ;; "case" and "default" get special treatment elsewhere
+     ;; "case" gets special treatment elsewhere
      '("and" "as" "break" "continue" "declare" "do" "echo" "else" "elseif"
        "endfor" "endforeach" "endif" "endswitch" "endwhile" "exit"
        "extends" "for" "foreach" "global" "if" "include" "include_once"
        "next" "or" "require" "require_once" "return" "static" "switch"
-       "then" "var" "while" "xor" "throw" "catch" "try"
+       "then" "var" "while" "xor" "throw" "catch" "try" "default"
        "clone" "catch all" "finally")))
   "PHP keywords.")
 
@@ -1023,14 +1052,6 @@ current `tags-file-name'."
    php-font-lock-keywords-1
    (list
 
-    ;; namespace/use declaration
-    '("\\<\\(namespace\\|use\\)\\s-+\\(?:\\$\\|\\\\\\)?\\(\\sw+\\)"
-      (1 font-lock-keyword-face) (2 font-lock-type-face))
-
-    ;; as for aliasing namespaces
-    '("\\<\\(as\\)\\s-+\\([^$]\\sw+\\)"
-      (1 font-lock-keyword-face) (2 font-lock-type-face))
-
     ;; class declaration
     '("\\<\\(class\\|interface\\)\\s-+\\(\\sw+\\)?"
       (1 font-lock-keyword-face) (2 font-lock-type-face nil t))
@@ -1048,8 +1069,12 @@ current `tags-file-name'."
 
     ;; handle several words specially, to include following word,
     ;; thereby excluding it from unknown-symbol checks later
-    '("\\<\\(new\\|extends\\|instanceof\\)\\s-+\\(\\$\\|\\\\\\)?\\(\\sw+\\)"
-      (1 font-lock-keyword-face) (3 font-lock-type-face))
+    '("\\<\\(new\\|extends\\|instanceof\\|namespace\\|use\\)\\s-+\\(?:\\$\\|\\\\\\)?\\(\\sw+\\)"
+      (1 font-lock-keyword-face) (2 font-lock-type-face))
+
+    ;; as for aliasing namespaces
+    '("\\<\\(as\\)\\s-+\\([^$]\\sw+\\)"
+      (1 font-lock-keyword-face) (2 font-lock-type-face))
 
     ;; function declaration
     '("\\<\\(function\\)\\s-+&?\\(\\sw+\\)\\s-*("
@@ -1080,44 +1105,47 @@ current `tags-file-name'."
 (defconst php-font-lock-keywords-3
   (append
    php-font-lock-keywords-2
-   (list
-    ;; warn about '$' immediately after ->
-    ;; '("\\$\\sw+->\\s-*\\(\\$\\)\\(\\sw+\\)"
-    ;;   (1 font-lock-warning-face) (2 php-default-face))
+   `(
+     ;; warn about '$' immediately after ->
+     ,@(when php-mode-dollar-property-warning
+         '(("\\$\\sw+->\\s-*\\(\\$\\)\\(\\sw+\\)"
+            (1 font-lock-warning-face) (2 php-default-face))))
 
-    ;; warn about $word.word -- it could be a valid concatenation,
-    ;; but without any spaces we'll assume $word->word was meant.
-    ;; '("\\$\\sw+\\(\\.\\)\\sw"
-    ;;   1 font-lock-warning-face)
+     ;; warn about $word.word -- it could be a valid concatenation,
+     ;; but without any spaces we'll assume $word->word was meant.
+     ,@(when php-mode-dot-property-warning
+         '(("\\$\\sw+\\(\\.\\)\\sw"
+            1 font-lock-warning-face)))
 
-    ;; Warn about ==> instead of =>
-    '("==+>" . font-lock-warning-face)
+     ;; Warn about ==> instead of =>
+     ("==+>" . font-lock-warning-face)
 
-    ;; exclude casts from bare-word treatment (may contain spaces)
-    `(,(concat "(\\s-*\\(" php-types "\\)\\s-*)")
+     ;; exclude casts from bare-word treatment (may contain spaces)
+     (,(concat "(\\s-*\\(" php-types "\\)\\s-*)")
       1 font-lock-type-face)
 
-    ;; PHP5: function declarations may contain classes as parameters type
-    `(,(concat "[(,]\\s-*\\(\\sw+\\)\\s-+&?\\$\\sw+\\>")
+     ;; PHP5: function declarations may contain classes as parameters type
+     (,(concat "[(,]\\s-*\\(\\sw+\\)\\s-+&?\\$\\sw+\\>")
       1 font-lock-type-face)
 
-    ;; Fontify variables and function calls
-    '("\\$\\(this\\|that\\)\\W" (1 font-lock-constant-face nil nil))
-    `(,(concat "\\$\\(" php-superglobals "\\)\\W")
+     ;; Fontify variables and function calls
+     ("\\$\\(this\\|that\\)\\W" (1 font-lock-constant-face nil nil))
+     (,(concat "\\$\\(" php-superglobals "\\)\\W")
       (1 font-lock-constant-face nil nil)) ;; $_GET & co
-    ;; '("\\$\\(\\sw+\\)" (1 font-lock-variable-name-face)) ;; $variable
-    ;; '("->\\(\\sw+\\)" (1 font-lock-variable-name-face t t)) ;; ->variable
-    ;; '("->\\(\\sw+\\)\\s-*(" . (1 php-default-face t t)) ;; ->function_call
-    '("\\(\\sw+\\)::\\sw+\\s-*(?" . (1 font-lock-type-face)) ;; class::member
-    ;; '("::\\(\\sw+\\>[^(]\\)" . (1 php-default-face)) ;; class::constant
-    '("\\(\\sw*\\)\\\\\\(\\sw+\\)" (1 font-lock-type-face) (2 font-lock-type-face)) ;; \namespace
-    ;; '("\\<\\sw+\\s-*[[(]" . php-default-face) ;; word( or word[
-    ;; '("\\<[0-9]+" . php-default-face) ;; number (also matches word)
+     ;; ("\\$\\(\\sw+\\)" (1 font-lock-variable-name-face)) ;; $variable
+     ;; ("->\\(\\sw+\\)" (1 font-lock-variable-name-face t t)) ;; ->variable
+     ;; ("->\\(\\sw+\\)\\s-*(" . (1 php-default-face t t)) ;; ->function_call
+     ("\\(\\sw+\\)::\\sw+\\s-*(?" . (1 font-lock-type-face)) ;; class::member
+     ;; ("::\\(\\sw+\\>[^(]\\)" . (1 php-default-face)) ;; class::constant
+     ("\\(\\sw*\\)\\\\\\(\\sw+\\)" (1 font-lock-type-face) (2 font-lock-type-face)) ;; \namespace
+     ;; ("\\<\\sw+\\s-*[[(]" . php-default-face) ;; word( or word[
+     ;; ("\\<[0-9]+" . php-default-face) ;; number (also matches word)
 
-    ;; Warn on any words not already fontified
-    ;; '("\\<\\sw+\\>" . font-lock-warning-face)
-
-    ))
+     ;; Warn on any words not already fontified
+     ("\\<\\sw+\\>" . ,(if php-mode-warn-on-unmatched
+                           'font-lock-warning-face
+                         'php-default-face))
+     ))
   "Gauchy level highlighting for PHP mode.")
 
 (provide 'php-mode)
