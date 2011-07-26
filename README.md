@@ -40,3 +40,5 @@ Luka Novsak
 Ranko Radonić
 
 Grzegorz Rożniecki
+
+...and many other contributors documented in php-mode.el.
