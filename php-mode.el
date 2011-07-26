@@ -358,6 +358,7 @@ See `php-beginning-of-defun'."
   (set (make-local-variable 'c-opt-cpp-prefix) php-tags-key)
 
   (c-set-offset 'cpp-macro 0)
+  (c-set-offset 'case-label '+) ;; make each case/default line indented
 
 ;;   (c-lang-defconst c-block-stmt-1-kwds php php-block-stmt-1-kwds)
 ;;   (c-lang-defvar c-block-stmt-1-kwds (c-lang-const c-block-stmt-1-kwds))
@@ -984,12 +985,12 @@ current `tags-file-name'."
   (eval-when-compile
     (regexp-opt
      ;; "class", "new" and "extends" get special treatment
-     ;; "case" and "default" get special treatment elsewhere
+     ;; "case" gets special treatment elsewhere
      '("and" "as" "break" "continue" "declare" "do" "echo" "else" "elseif"
        "endfor" "endforeach" "endif" "endswitch" "endwhile" "exit"
        "extends" "for" "foreach" "global" "if" "include" "include_once"
        "next" "or" "require" "require_once" "return" "static" "switch"
-       "then" "var" "while" "xor" "throw" "catch" "try"
+       "then" "var" "while" "xor" "throw" "catch" "try" "default"
        "clone" "catch all" "finally")))
   "PHP keywords.")
 
