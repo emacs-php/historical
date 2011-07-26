@@ -73,6 +73,18 @@
 
 ;;; Changelog:
 
+;; 1.6
+;;   Added from http://www.emacswiki.org/emacs/php-mode-improved.el
+;;   New customisation options for 'Gauchy' level of syntax highlighting:
+;;     * `php-mode-dollar-property-warning', which, if non-nil, warns on
+;;       $foo->$bar. (Default is nil.)
+;;     * `php-mode-dot-property-warning', which, if non-nil, warns on
+;;       $foo.bar. (Default is nil.)
+;;     * `php-mode-warn-on-unmatches', which, if non-nil, warns on
+;;       "everything else". (Default is nil.)
+;;   Support for namespaces.  Support for anonymous functions.  Support
+;;   for implementing more than one interface in a class.  Support for
+;;   namespace aliases.
 ;; 1.5
 ;;   Support function keywords like public, private and the ampersand
 ;;   character for function-based commands.  Support abstract, final,
@@ -216,6 +228,26 @@ You can replace \"en\" with your ISO language code."
 (defcustom php-mode-force-pear nil
   "Normally PEAR coding rules are enforced only when the filename contains \"PEAR.\"
 Turning this on will force PEAR rules on all PHP files."
+  :type 'boolean
+  :group 'php)
+
+(defcustom php-mode-dollar-property-warning nil
+  "If non-`nil', warn about expressions like $foo->$bar where you
+might have meant $foo->bar. Defaults to `nil' since this is valid
+code."
+  :type 'boolean
+  :group 'php)
+
+(defcustom php-mode-dot-property-warning nil
+  "If non-`nil', wan about expressions like $foo.bar, which could
+be a valid concatenation (if bar were a constant, or interpreted
+as an unquoted string), but it's more likely you meant $foo->bar."
+  :type 'boolean
+  :group 'php)
+
+(defcustom php-mode-warn-on-unmatched nil
+  "If non-`nil', use `font-lock-warning-face' on any expression
+that isn't matched by the other font lock regular expressions."
   :type 'boolean
   :group 'php)
 
@@ -1072,44 +1104,47 @@ current `tags-file-name'."
 (defconst php-font-lock-keywords-3
   (append
    php-font-lock-keywords-2
-   (list
-    ;; warn about '$' immediately after ->
-    ;; '("\\$\\sw+->\\s-*\\(\\$\\)\\(\\sw+\\)"
-    ;;   (1 font-lock-warning-face) (2 php-default-face))
+   `(
+     ;; warn about '$' immediately after ->
+     ,@(when php-mode-dollar-property-warning
+         '(("\\$\\sw+->\\s-*\\(\\$\\)\\(\\sw+\\)"
+            (1 font-lock-warning-face) (2 php-default-face))))
 
-    ;; warn about $word.word -- it could be a valid concatenation,
-    ;; but without any spaces we'll assume $word->word was meant.
-    ;; '("\\$\\sw+\\(\\.\\)\\sw"
-    ;;   1 font-lock-warning-face)
+     ;; warn about $word.word -- it could be a valid concatenation,
+     ;; but without any spaces we'll assume $word->word was meant.
+     ,@(when php-mode-dot-property-warning
+         '(("\\$\\sw+\\(\\.\\)\\sw"
+            1 font-lock-warning-face)))
 
-    ;; Warn about ==> instead of =>
-    '("==+>" . font-lock-warning-face)
+     ;; Warn about ==> instead of =>
+     ("==+>" . font-lock-warning-face)
 
-    ;; exclude casts from bare-word treatment (may contain spaces)
-    `(,(concat "(\\s-*\\(" php-types "\\)\\s-*)")
+     ;; exclude casts from bare-word treatment (may contain spaces)
+     (,(concat "(\\s-*\\(" php-types "\\)\\s-*)")
       1 font-lock-type-face)
 
-    ;; PHP5: function declarations may contain classes as parameters type
-    `(,(concat "[(,]\\s-*\\(\\sw+\\)\\s-+&?\\$\\sw+\\>")
+     ;; PHP5: function declarations may contain classes as parameters type
+     (,(concat "[(,]\\s-*\\(\\sw+\\)\\s-+&?\\$\\sw+\\>")
       1 font-lock-type-face)
 
-    ;; Fontify variables and function calls
-    '("\\$\\(this\\|that\\)\\W" (1 font-lock-constant-face nil nil))
-    `(,(concat "\\$\\(" php-superglobals "\\)\\W")
+     ;; Fontify variables and function calls
+     ("\\$\\(this\\|that\\)\\W" (1 font-lock-constant-face nil nil))
+     (,(concat "\\$\\(" php-superglobals "\\)\\W")
       (1 font-lock-constant-face nil nil)) ;; $_GET & co
-    ;; '("\\$\\(\\sw+\\)" (1 font-lock-variable-name-face)) ;; $variable
-    ;; '("->\\(\\sw+\\)" (1 font-lock-variable-name-face t t)) ;; ->variable
-    ;; '("->\\(\\sw+\\)\\s-*(" . (1 php-default-face t t)) ;; ->function_call
-    '("\\(\\sw+\\)::\\sw+\\s-*(?" . (1 font-lock-type-face)) ;; class::member
-    ;; '("::\\(\\sw+\\>[^(]\\)" . (1 php-default-face)) ;; class::constant
-    '("\\(\\sw*\\)\\\\\\(\\sw+\\)" (1 font-lock-type-face) (2 font-lock-type-face)) ;; \namespace
-    ;; '("\\<\\sw+\\s-*[[(]" . php-default-face) ;; word( or word[
-    ;; '("\\<[0-9]+" . php-default-face) ;; number (also matches word)
+     ;; ("\\$\\(\\sw+\\)" (1 font-lock-variable-name-face)) ;; $variable
+     ;; ("->\\(\\sw+\\)" (1 font-lock-variable-name-face t t)) ;; ->variable
+     ;; ("->\\(\\sw+\\)\\s-*(" . (1 php-default-face t t)) ;; ->function_call
+     ("\\(\\sw+\\)::\\sw+\\s-*(?" . (1 font-lock-type-face)) ;; class::member
+     ;; ("::\\(\\sw+\\>[^(]\\)" . (1 php-default-face)) ;; class::constant
+     ("\\(\\sw*\\)\\\\\\(\\sw+\\)" (1 font-lock-type-face) (2 font-lock-type-face)) ;; \namespace
+     ;; ("\\<\\sw+\\s-*[[(]" . php-default-face) ;; word( or word[
+     ;; ("\\<[0-9]+" . php-default-face) ;; number (also matches word)
 
-    ;; Warn on any words not already fontified
-    ;; '("\\<\\sw+\\>" . font-lock-warning-face)
-
-    ))
+     ;; Warn on any words not already fontified
+     ("\\<\\sw+\\>" . ,(if php-mode-warn-on-unmatched
+                           'font-lock-warning-face 
+                         'php-default-face))
+     ))
   "Gauchy level highlighting for PHP mode.")
 
 (provide 'php-mode)
