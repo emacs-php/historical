@@ -7,10 +7,10 @@
 ;;               2011 Grzegorz Rożniecki
 
 ;; Maintainer: Ranko Radonic
-;; Authors: Turadg Aleahmad, Aaron S. Hawley, Luka Novsak, Ranko Radonic, Grzegorz Ro¿niecki
+;; Authors: Turadg Aleahmad, Aaron S. Hawley, Luka Novsak, Ranko Radonic, Grzegorz Rożniecki
 ;; Keywords: php languages oop
 ;; Created: 1999-05-17
-;; Modified: 2011-05-25
+;; Modified: 2011-07-26
 ;; X-URL: https://github.com/rradonic/php-mode
 
 (defconst php-mode-version-number "1.6.1"
@@ -54,7 +54,7 @@
 
 ;;; Commentary:
 
-;; PHP mode is a major mode for editing PHP 3 and 4 source code.  It's
+;; PHP mode is a major mode for editing PHP source code. It's
 ;; an extension of C mode; thus it inherits all C mode's navigation
 ;; functionality.  But it colors according to the PHP grammar and indents
 ;; according to the PEAR coding guidelines.  It also includes a couple
@@ -127,13 +127,13 @@
 
 (defcustom php-speedbar-config t
   "When set to true automatically configures Speedbar to observe PHP files.
-Ignores php-file patterns option; fixed to expression \"\\.\\(inc\\|php[s34]?\\)\""
+Ignores php-file patterns option; fixed to expression \"\\.\\(inc\\|php[s345]?\\)\""
   :type 'boolean
   :set (lambda (sym val)
          (set-default sym val)
          (if (and val (fboundp 'speedbar))
              (speedbar-add-supported-extension
-              "\\.\\(inc\\|php[s34]?\\|phtml\\)")))
+              "\\.\\(inc\\|php[s345]?\\|phtml\\)")))
   :group 'php)
 
 (defcustom php-mode-speedbar-open nil
@@ -191,7 +191,7 @@ You can replace \"en\" with your ISO language code."
   :group 'php)
 
 ;;;###autoload
-(defcustom php-file-patterns '("\\.php[s34]?\\'" "\\.phtml\\'" "\\.inc\\'")
+(defcustom php-file-patterns '("\\.php[s345]?\\'" "\\.phtml\\'" "\\.inc\\'")
   "List of file patterns for which to automatically invoke `php-mode'."
   :type '(repeat (regexp :tag "Pattern"))
   :set (lambda (sym val)
@@ -219,7 +219,7 @@ Turning this on will force PEAR rules on all PHP files."
   :type 'boolean
   :group 'php)
 
-(defconst php-mode-modified "2011-05-25"
+(defconst php-mode-modified "2011-07-26"
   "PHP Mode build date.")
 
 (defun php-mode-version ()
@@ -492,7 +492,7 @@ current `tags-file-name'."
       (set-buffer buf)
       (goto-char (point-min))
       (while (re-search-forward
-              "^\\([-a-zA-Z0-9_.]+\\)\n"
+              "^\\([-a-zA-Z0-9_.]+\\)$"
               nil t)
         (intern (buffer-substring (match-beginning 1) (match-end 1))
                 table)))
@@ -588,7 +588,7 @@ current `tags-file-name'."
   (eval-when-compile
     (regexp-opt
      '(;; core constants
-       "__LINE__" "__FILE__"
+       "__LINE__" "__FILE__" "__DIR__"
        "__FUNCTION__" "__CLASS__" "__METHOD__" "__NAMESPACE__"
        "PHP_OS" "PHP_VERSION"
        "TRUE" "FALSE" "NULL"
@@ -1019,14 +1019,6 @@ current `tags-file-name'."
    php-font-lock-keywords-1
    (list
 
-    ;; namespace/use declaration
-    '("\\<\\(namespace\\|use\\)\\s-+\\(?:\\$\\|\\\\\\)?\\(\\sw+\\)"
-      (1 font-lock-keyword-face) (2 font-lock-type-face))
-
-    ;; as for aliasing namespaces
-    '("\\<\\(as\\)\\s-+\\([^$]\\sw+\\)"
-      (1 font-lock-keyword-face) (2 font-lock-type-face))
-
     ;; class declaration
     '("\\<\\(class\\|interface\\)\\s-+\\(\\sw+\\)?"
       (1 font-lock-keyword-face) (2 font-lock-type-face nil t))
@@ -1044,8 +1036,12 @@ current `tags-file-name'."
 
     ;; handle several words specially, to include following word,
     ;; thereby excluding it from unknown-symbol checks later
-    '("\\<\\(new\\|extends\\|instanceof\\)\\s-+\\(\\$\\|\\\\\\)?\\(\\sw+\\)"
-      (1 font-lock-keyword-face) (3 font-lock-type-face))
+    '("\\<\\(new\\|extends\\|instanceof\\|namespace\\|use\\)\\s-+\\(?:\\$\\|\\\\\\)?\\(\\sw+\\)"
+      (1 font-lock-keyword-face) (2 font-lock-type-face))
+
+    ;; as for aliasing namespaces
+    '("\\<\\(as\\)\\s-+\\([^$]\\sw+\\)"
+      (1 font-lock-keyword-face) (2 font-lock-type-face))
 
     ;; function declaration
     '("\\<\\(function\\)\\s-+&?\\(\\sw+\\)\\s-*("
