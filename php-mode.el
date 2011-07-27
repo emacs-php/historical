@@ -2,12 +2,9 @@
 
 ;; Copyright (C) 1999, 2000, 2001, 2003, 2004 Turadg Aleahmad
 ;;               2008 Aaron S. Hawley
-;;               2010 Luka Novsak
-;;               2011 Ranko Radonic
-;;               2011 Grzegorz Rożniecki
-
+;;               2010, 2011 Ranko Radonic
 ;; Maintainer: Ranko Radonic
-;; Authors: Turadg Aleahmad, Aaron S. Hawley, Luka Novsak, Ranko Radonic, Grzegorz Rożniecki
+;; Original Author: Turadg Aleahmad, 1999-2004
 ;; Keywords: php languages oop
 ;; Created: 1999-05-17
 ;; Modified: 2011-07-26
@@ -69,7 +66,8 @@
 ;; Sammartino, ppercot, Valentin Funk, Stig Bakken, Gregory Stark,
 ;; Chris Morris, Nils Rennebarth, Gerrit Riessen, Eric Mc Sween,
 ;; Ville Skytta, Giacomo Tesio, Lennart Borgman, Stefan Monnier,
-;; Aaron S. Hawley, Ian Eure, Bill Lovett, Dias Badekas, David House
+;; Aaron S. Hawley, Ian Eure, Bill Lovett, Dias Badekas, David House,
+;; Luka Novsak, Ranko Radonic, Grzegorz Rożniecki, Yusuke Segawa
 
 ;;; Changelog:
 
