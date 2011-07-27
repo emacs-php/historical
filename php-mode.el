@@ -1,8 +1,9 @@
 ;;; php-mode.el --- major mode for editing PHP code
 
-;; Copyright (C) 1999, 2000, 2001, 2003, 2004 Turadg Aleahmad
+;; Copyright (C) 1999-2004 Turadg Aleahmad
 ;;               2008 Aaron S. Hawley
 ;;               2010, 2011 Ranko Radonic
+;;               2008-2011 the Contributors (listed below)
 ;; Maintainer: Ranko Radonic
 ;; Original Author: Turadg Aleahmad, 1999-2004
 ;; Keywords: php languages oop
