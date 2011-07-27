@@ -82,9 +82,9 @@
 ;;       $foo.bar. (Default is nil.)
 ;;     * `php-mode-warn-on-unmatches', which, if non-nil, warns on
 ;;       "everything else". (Default is nil.)
-;;   Support for namespaces.  Support for anonymous functions.  Support
-;;   for implementing more than one interface in a class.  Support for
-;;   namespace aliases.
+;;   Support for traits.  Support for namespaces.  Support for anonymous
+;;   functions.  Support for implementing more than one interface in a
+;;   class.  Support for namespace aliases.
 ;; 1.5
 ;;   Support function keywords like public, private and the ampersand
 ;;   character for function-based commands.  Support abstract, final,
