@@ -175,6 +175,8 @@ Turning this on will open it whenever `php-mode' is loaded."
      "^\\s-*class\\s-+\\(\\(?:\\sw\\|\\s_\\)+\\)\\s-*" 1)
     ("Namespaces"
      "^\\s-*namespace\\s-+\\(\\(?:\\sw\\|\\s_\\)+\\)\\s-*" 1)
+    ("Traits"
+     "^\\s-*trait\\s-+\\(\\(?:\\sw\\|\\s_\\)+\\)\\s-*" 1)
     ("All Functions"
      "^\\s-*\\(?:\\(?:abstract\\|final\\|private\\|protected\\|public\\|static\\)\\s-+\\)*function\\s-+\\(\\(?:\\sw\\|\\s_\\)+\\)\\s-*(" 1)
     )
@@ -334,7 +336,7 @@ See `php-beginning-of-defun'."
 (defconst php-block-stmt-2-key
   (regexp-opt php-block-stmt-2-kwds))
 
-(defconst php-class-decl-kwds '("class" "interface"))
+(defconst php-class-decl-kwds '("class" "interface" "trait"))
 
 (defconst php-class-key
   (concat
@@ -1053,7 +1055,7 @@ current `tags-file-name'."
    (list
 
     ;; class declaration
-    '("\\<\\(class\\|interface\\)\\s-+\\(\\sw+\\)?"
+    '("\\<\\(class\\|interface\\|trait\\)\\s-+\\(\\sw+\\)?"
       (1 font-lock-keyword-face) (2 font-lock-type-face nil t))
 
     ;; implements
