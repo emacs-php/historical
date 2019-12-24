@@ -1,0 +1,2877 @@
+Abs(arg)
+
+     Abs returns the absolute value of arg.
+
+Ada_Close(connection_id)
+
+     Ada_Close will close down the connection to the Adabas server
+     associated with the given connection identifier.
+
+     This function is only available if Adabas support has been enabled in
+     PHP.
+
+Ada_Connect(data source name, username, password)
+
+     Ada_Connect opens a connection to a Adabas server. Each of the
+     arguments should be a quoted string. The first parameter (data source
+     name) is a string in the form "servername:databasename". The servername
+     (but not the colon) can be omitted if you want to access a local
+     database. This function returns a connection_id. This identifier is
+     needed by other Adabas functions. You can have multiple connections
+     open at once. This function will return 0 on error.
+
+     This function is only available if Adabas support has been enabled in
+     PHP.
+
+Ada_Exec(connection_id, query_string)
+
+     Ada_Exec will send an SQL statement to the Adabas server specified by
+     the connection_id. The connection_id must be a valid identifier that
+     was returned by Ada_Connect or the special value 0. If connection_id is
+     0, ada_exec tries to establish or to use a connection with the
+     parameters given with the configuration directives phpAdaDefDB,
+     phpAdaUser and phpAdaPW.
+     The return value of this function is an identifier to be used to access
+     the results by other Adabas functions. This function will return 0 on
+     error. It will return 1 when the command executed correctly but is not
+     expected to return data (insert or update commands, for example). Note
+     that selects which return no data will still return a valid result
+     greater than 1.
+
+     This function is only available if Adabas support has been enabled in
+     PHP.
+
+Ada_FetchRow(result_id [,row_number])
+
+     Ada_FetchRow fetches a row of the data that was returned by Ada_Exec.
+     After Ada_FetchRow is called, the fields of that row can be access with
+     Ada_Result. If no rownumber is given, Ada_FetchRow will try to fetch
+     the next row in the result set. Every time Ada_FetchRow is called a new
+     row can be accessed by Ada_Result. If Ada_FetchRow was succesful (there
+     was a row), 1 is returned, if there are no more rows, Ada_FetchRow will
+     return 0. The return value of Ada_FetchRow can be used as the condition
+     of a while loop. Calls to Ada_FetchRow() with and without rownumber can
+     be mixed. To step through the result more than once, you can call
+     Ada_FetchRow() with rownumber 1 and then continue with Ada_FetchRow()
+     without rownumber to review the result.
+
+     This function is only available if Adabas support has been enabled in
+     PHP.
+
+Ada_FieldName(result_id, field_number)
+
+     Ada_FieldName will return the name of the field occupying the given
+     column number in the given Adabas result identifier. Field numbering
+     starts from 0.
+
+     This function is only available if Adabas support has been enabled in
+     PHP.
+
+Ada_FieldNum(result_id, field_name)
+
+     Ada_FieldNum will return the number of the column slot that corresponds
+     to the named field in the given Adabas result identifier. Field
+     numbering starts at 0. This function will return -1 on error.
+
+     This function is only available if Adabas support has been enabled in
+     PHP.
+
+Ada_FieldType(result_id, field_name|field_number)
+
+     Ada_FieldType will return the SQL type of the field referecend by name
+     or number in the given Adabas result identifier. Note: Field numbering
+     starts from 0.
+
+     This function is only available if Adabas support has been enabled in
+     PHP.
+
+Ada_FreeResult(result_id)
+
+     Ada_FreeResult only needs to be called if you are worried about using
+     too much memory while your script is running. All result memory will
+     automatically be freed when the script is finished. But, if you are
+     sure you are not going to need the result data anymore in a script, you
+     may call Ada_FreeResult with the result identifier as an argument and
+     the associated result memory will be freed.
+
+     This function is only available if Adabas support has been enabled in
+     PHP.
+
+Ada_NumFields(result_id)
+
+     Ada_NumFields will return the number of fields (columns) in a Adabas
+     result. The argument is a valid result identifier returned by Ada_Exec.
+     This function will return -1 on error.
+
+     This function is only available if Adabas support has been enabled in
+     PHP.
+
+Ada_NumRows(result_id)
+
+     Ada_NumRows will return the number of rows in a Adabas result. The
+     argument is a valid result identifier returned by Ada_Exec. This
+     function will return -1 on error. For INSERT, UPDATE, DELETE statements
+     Ada_NumRows() returns the number of rows affected. For a SELECT clause
+     this is the number of rows available.
+
+     This function is only available if Adabas support has been enabled in
+     PHP.
+
+Ada_Result(result_id, field name | index)
+
+     Ada_Result will return values from a result identifier produced by
+     Ada_Exec. The field name specify what cell in the row to return.
+     Instead of naming the field, you may use the field index as an unquoted
+     number. Field indices start from 0. If the requested field is of code
+     type BYTE (binary) or is longer than 4096 bytes, the contents is sent
+     directly to the client. Hint: [VAR]CHAR BYTE fields can be returned
+     into a php variable by using the HEX() db function; e. g. SELECT
+     HEX(SYSKEY) SYSKEY FROM MYTABLE.
+
+     This function is only available if Adabas support has been enabled in
+     PHP.
+
+Ada_ResultAll(result_id [,format])
+
+     Ada_ResultAll will print all rows from a result identifier produced by
+     Ada_Exec. The result is printed in HTML table format. With the optional
+     formatstring additional overall table formatting can be done (e. g.
+     bgcolor= will set background color, >caption> </caption to set
+     caption). Note: The contents of "format" will be inserted into the HTML
+     table tag like this <table format >...
+
+     This function is only available if Adabas support has been enabled in
+     PHP.
+
+AddSlashes(arg)
+
+     Escapes any $ \ or ' (if MAGIC_QUOTES is set) with a backslash. See
+     also StripSlashes().
+
+ASort(array)
+
+     Sort is used to sort a PHP associative array in ascending order. Use
+     ARSort() for descending order. Unlike the Sort() function, ASort()
+     maintains index-value pairings. It understands the three variable types
+     and will sort alphabetically if the array contains strings, and
+     numerically if the array contains numbers. In the case of an array
+     which contains a mixture of types, the first type in the array will
+     specify the sort method. Note that if you are going to sort a
+     non-associative array, you should use the Sort() function.
+
+BinDec(binary_string)
+
+     BinDec returns the decimal equivalent of the binary number represented
+     by the binary_string argument. The largest number that can be converted
+     is 31 bits long or 4294967295 in decimal. See also the DecBin()
+     function.
+
+Ceil(value)
+
+     Ceil() rounds a floating point value up to the next integer. The return
+     value is of type double (floating point) such that it can be used
+     properly in complex equations. To get an integer type back, use: $new =
+     IntVal(Ceil($value));
+     See also Floor().
+
+ChDir(dir)
+
+     ChDir changes the current working directory to the directory specified
+     in the argument.
+
+ChGrp(file,group)
+
+     ChGrp changes the group id of the specified file.
+
+ChMod(file,perms)
+
+     ChMod changes the file permissions of the specified file. The perms
+     parameter must be specified in octal notation. eg.
+     ChMod($filename,0755)
+
+ChOwn(file,owner)
+
+     ChOwn changes the specified file to be owned by the specified owner.
+     Note that this will only work if the PHP/FI binary is running as root
+     (which is not generally a good idea).
+
+Chop(string)
+
+     Chop removes all trailing whitespaces including new-lines, tabs and
+     spaces and returns the new string.
+
+Chr(arg)
+
+     Chr returns the ASCII character represented by the integer argument.
+
+ClearStack()
+
+     The ClearStack() function is a hack/workaround for a deficiency in the
+     PHP parser. This dificiency is that PHP only has a single expression
+     stack. When inside a user-defined function this expression stack is
+     never cleared because its contents may be needed within a complex
+     expression in the context from which the user-defined function was
+     called. This means that if you have a while loop with a lot of
+     iterations inside a user-defined function, you may be chewing up a lot
+     of stack space. You may even be hitting the max data space limit. You
+     can put a call to ClearStack() inside your while loop to prevent this
+     memory consumption, but the trade-off is that you cannot use your
+     function within any sort of context. ie. you have to assign the output
+     of the function to a temporary variable and then use this temporary
+     variable in whatever context you need.
+
+ClearStatCache()
+
+     The stat() system call is normally an expensive operation on most
+     operating systems. In order to make sure that repeated calls to the
+     various File* functions like FilePerms(), FileInode(), etc. the result
+     of the last stat() call is always cached. If one of the File* functions
+     is called again with the same argument, the cached stat() result will
+     be used. In order to force a new stat() system call this
+     ClearStatCache() function may be called to clear the cached stat()
+     result.
+
+closeDir()
+
+     closeDir closes a directory opened using the openDir function.
+
+CloseLog()
+
+     CloseLog() closes the descriptor Syslog() uses to write to the system
+     logger. See the closelog(3) UNIX man page for more details. See also
+     Syslog(), OpenLog() and InitSyslog().
+
+Cos(arg)
+
+     Cos returns the cosine of arg in radians. See also Sin() and Tan()
+
+Count(array)
+
+     Count returns the number of items in an array variable. If the variable
+     is not an array, the return value will be 1 (because a normal variable
+     is similar to an array with only one item). If the variable is not
+     defined, the return value will be 0.
+
+Crypt(string,[salt])
+
+     Crypt will encrypt a string using the standard Unix DES encryption
+     method. Arguments are a string to be encrypted and an optional
+     two-character salt string to base the encryption on. See the Unix man
+     page for your crypt function for more information. If you do not have a
+     crypt function on your Unix system, you can use Michael Glad's public
+     domain UFC-Crypt package which was developed in Denmark and hence not
+     restricted by US export laws as long as you ftp it from an non-US site.
+
+Date(format,time)
+
+     The Date function is used to display times and dates in various ways.
+     The function takes a format string and a time as arguments. If the time
+     argument is left off, the current time and date will be used. The time
+     argument is specified as an integer in number of seconds since the Unix
+     Epoch on Jan.1 1970. The format string is used to indicate which
+     date/time components should be displayed and how they should be
+     formatted. The following characters are recognized within the format
+     string. Any unrecognized character is printed verbosely:
+
+        o Y - Year eg. 1995
+        o y - Year eg. 95
+        o M - Month eg. Oct
+        o m - Month eg. 10
+        o F - Month eg. October
+        o D - Day eg. Fri
+        o l - Day eg. Friday
+        o d - Day eg. 27
+        o z - Day of the year eg. 299
+        o H - Hours in 24 hour format eg. 13
+        o h - Hours in 12 hour format eg. 1
+        o i - Minutes eg. 5
+        o s - Seconds eg. 40
+        o U - Seconds since epoch eg. 814807830
+        o A - AM/PM
+        o a - am/pm
+
+     See also the MkTime() function.
+
+dbList()
+
+     dbList outputs information about the db support compiled into PHP.
+
+dbmClose(filename)
+
+     dbmClose simply closes the specified dbm file. It will also unlock any
+     lock files, so it is important to close any dbm files that have been
+     opened.
+
+dbmDelete(filename,key)
+
+     dbmDelete will delete the key/content pair specified by the given key
+     argument.
+
+dbmExists(filename,key)
+
+     dbmExists will return 1 if the key exists and 0 otherwise.
+
+dbmFetch(filename,key)
+
+     dbmFetch will return the content string associated with the given key.
+
+dbmFirstKey(filename)
+
+     dbmFirstKey returns the first key in the dbm file. Note that no
+     particular order is guaranteed since the order depends on hash table
+     values calculated within the dbm implementation. You may use the Sort
+     function to sort arrays of data from the dbm file if necessary.
+
+dbmInsert(filename,key,content)
+
+     dbmInsert inserts a new key/content data pair into a dbm file. If the
+     key already exists, the insert will fail.
+
+dbmNextKey(filename,key)
+
+     dbmNextKey returns the next key after the specified key. By calling
+     dbmfirstkey() followed by successive calls to dbmnextkey() it is
+     possible to visit every key/content pair in the dbm file.
+
+dbmOpen(filename,mode)
+
+     dbmOpen() opens a dbm file. The first argument is the full-path
+     filename of the dbm file to be opened and the second is the file open
+     mode which is one of "r", "n" or "w" for read, new (implies write) and
+     write respectively. If ndbm support is used, ndbm will actually create
+     filename.dir and filename.pag files. gdbm only uses one file, as does
+     the internal flat ascii file support, and Berkeley's libdb create a
+     filename.db file. Note that PHP does its own file locking in addition
+     to any file locking that may be done by the dbm library itself. PHP
+     does not delete the .lck files it creates. It uses these files simply
+     as fixed inodes on which to do the file locking. For more information
+     on dbm files, see your Unix man pages, or obtain GNU's gdbm from
+     ftp://prep.ai.mit.edu/pub/gnu.
+
+dbmReplace(filename,key,content)
+
+     dbmReplace is similar to the dbminsert() function, the only difference
+     being that if the key already exists, the old content string will be
+     replaced with the new.
+
+DecBin(number)
+
+     DecBin returns a string containing a binary representation of the given
+     number argument. The largest number that can be converted is 31 bits
+     long or 4294967295 in decimal. See also the BinDec() function.
+
+DecHex(number)
+
+     DecHex converts a decimal number to a hexadecimal string. See also the
+     HexDec() function.
+
+DecOct(number)
+
+     DecOct converts a decimal number to an octal number. See also OctDec().
+
+doubleval(variable)
+
+     doubleval returns the double (floating point) value of the variable.
+     See also the strval() and intval() functions.
+
+Echo [format_string] expression [, expression [,...]]
+
+     Echo is not a function. ie. you do not put brackets around the
+     arguments to it. It is used to display results of PHP functions or PHP
+     variables. See the Escape Character Section for a list of special
+     characters supported. The format_string is optional and if not present,
+     no output formatting will be done. The format string is similar to the
+     format string of the C printf function. See the man page for printf for
+     more details. Up to 5 expressions can be printed with a single echo
+     command. If you try to print more you will get a parser error. Note
+     that the types of the expressions are not relevant. The expressions are
+     automagically converted to the appropriate types as specified by the
+     format string if one is present. If you want to format something and
+     assign the formatted string to a variable instead of displaying it, use
+     the sprintf() function.
+
+     The following conversions are supported,
+
+          %d %i
+               Print a signed decimal number.
+          %o
+               Print an octal number.
+          %u
+               Print an unsigned decimal number.
+          %x %X
+               Print a hexadecimal number.
+          %f
+               Print a floating-point number.
+          %e %E
+               Print a floating-point number in scientific notation.
+          %g %G
+               Print a floating-point number in scientific notation or
+               normal notation, as appropriate.
+          %c
+               Print a single character.
+          %s
+               Print a string of characters.
+          %%
+               Print a literal percent-sign.
+
+          The following flags are accepted.
+          '-'
+               Left-justify the output within the field-width.
+          '+'
+               Ensure that all integers are signed (with a plus/minus
+               sign).
+          ' '
+               Similar to '+', but uses a space instead of a plus-sign.
+          '#'
+               Print prefixes in front of hex and octal numbers
+               designating them as such.
+          '''
+               Separate the digits into groups (usually comma-separated
+               groups of three).
+          '0'
+               Pad the field-width with zeros.
+
+          All of these flags are dependent upon whether or not your C
+          library's printf function supports them (the ''', for
+          example, is a GNU extension).
+
+          Most conversions will accept a field width and a precision,
+          as shown in the demo_echo.html file in the directory
+          /examples. It is not necessary to specify any type modifiers,
+          and, in fact, PHP will complain if the type modifier does not
+          make sense (which is almost always the case). PHP will
+          complain about (and refuse to accept) anything that it does
+          not recognize. Any extra arguments given that are not
+          required by the format-string are ignored.
+
+End(variable)
+
+     End moves the internal array pointer for the given variable to the last
+     item of the array and returns the value of this item. This is useful
+     for traversing an associative array in reverse order. See also Reset()
+     and Prev(). The following example would traverse an associative array
+     in reverse order:
+
+         <?
+           Reset($array);
+           $first_key = key($array);
+           End($array);
+           $k = key($array);
+           while($k != $first_key);
+             echo $array[$k];
+             prev($array);
+             $k = key($array);
+           endwhile;
+           echo $array[$k];
+         >
+
+ereg(expr,arg[,regs])
+
+     ereg returns non-zero if the regular expression is matched in the
+     argument string. For example, the condition, <?if (ereg("^This.*",
+     "This is an example string")> would be true since the "^This.*"
+     expression says to match the word This at the beginning of the string
+     and then match any characters afterwards. If the regs argument is
+     present, then match registers are filled into positions 0-10 in the
+     array named by the regs argument. Register 0 will always contain the
+     full matched string. For more information on regular expressions, see
+     the regular expression section of this document.
+
+eregi(expr,arg[,regs])
+
+     eregi is identical to the ereg() function except for the fact that the
+     regular expression is applied such that upper/lower case is ignored.
+
+ereg_replace(expr,replace,arg)
+
+     ereg_Replace scans the entire argument string and replaces any portions
+     of the string matched by the given expression with the replacement
+     string. For example, in the string, "This is an example string" we
+     could very easily replace every space with a dash with the command:
+     ereg_replace(" ","-","This is an example string").For more information
+     on regular expressions, see the regular expression section of this
+     document.
+
+eregi_replace(expr,replace,arg)
+
+     eregi_replace is identical to the ereg_replace() function except for
+     the fact that the regular expression is applied such that upper/lower
+     case is ignored.
+
+EscapeShellCmd(string)
+
+     EscapeShellCmd escapes any characters in a string that might be used to
+     trick a shell command into executing arbitrary commands. This function
+     should be used to make sure that any data coming from user input is
+     escaped before this data is passed to the Exec() or System() functions.
+     A standard use would be:
+
+         <?system(EscapeShellCmd($cmd))>
+
+Eval(string)
+
+     Eval takes the contents of the string argument and treats it like a
+     mini PHP/FI script. It will execute it as a separate PHP/FI script. Any
+     variables set or accessed from inside the eval will be from the global
+     reference frame in the current context of the eval statement in the
+     script. Variable substitution is done on the string arguments, so if
+     variables are to be used in the string expression they should be
+     escaped. Some examples:
+
+         $a = "echo phpversion();";
+         eval($a);
+
+         eval("echo phpversion();");
+
+         eval("\$a=1; echo \$a;");
+
+Exec(command_string [, array [,return_var]])
+
+     Exec executes the given unix command, however it does not output
+     anything. It simply returns the last line from the result of the
+     command. If you need to execute a command and have all the data from
+     the command passed directly back without any interference, use the
+     PassThru() function. If the array argument is present, then the
+     specified array will be filled with every line of output from the unix
+     command starting at the end of the array. Make sure you UnSet the array
+     before the call if your array already contains elements and you want to
+     start filling it at array element 0. If the return_var argument is
+     present along with the array argument, then the return status of the
+     executed unix command will be written to this variable. Note that if
+     you are going to allow data coming from user input to be passed to this
+     Exec function, then you should be using the EscapeShellCmd() function
+     to make sure that users cannot trick the system into executing
+     arbitrary commands. See also the system() function.
+
+Exit
+
+     The Exit command is used to terminate parsing right away as soon as
+     this tag is parsed.
+
+Exp(arg)
+
+     Exp returns e raised to the power of arg. See also pow()
+
+fclose($fd)
+
+     fclose() closes a file opened by fopen(). The argument is a file
+     pointer index as returned by the fopen() call.
+
+feof($fd)
+
+     Feof returns true if the file referred to by the file pointer index
+     argument has hit end-of-file.
+
+fgets($fd,bytes)
+
+     fgets() reads a line from a file opened by fopen(). Arguments are a
+     file pointer index as returned by fopen() and the max number of bytes
+     to read. Reading ends when max number of bytes have been read, or on an
+     end of line. This is similar to the C fgets() call. See also fputs().
+
+fgetss($fd,bytes)
+
+     Identical to the fgets() function, except this one tries to strip off
+     any HTML tags or PHP/FI script tags as it is reading the file.
+
+File(filename)
+
+     File reads the entire file and returns an array with each array element
+     containing a line of the file starting with array index 0.
+
+fileAtime(filename)
+
+     fileAtime returns the time of last data access. If the file does not
+     exist, or if it for some other reason could not be accessed, this
+     function returns -1. If repeated calls to fileAtime and the rest ofthe
+     file* functions are to be made and the file being accessed might change
+     or disappear, the ClearStatCache() should be called before the call to
+     the file* function.
+
+fileCtime(filename)
+
+     fileCtime returns the time of last status change. If the file does not
+     exist, or if it for some other reason could not be accessed, this
+     function returns -1. If repeated calls to fileCtime and the rest ofthe
+     file* functions are to be made and the file being accessed might change
+     or disappear, the ClearStatCache() should be called before the call to
+     the file* function.
+
+fileGroup(filename)
+
+     fileGroup returns the group id of the owner of the file. If the file
+     does not exist, or if it for some other reason could not be accessed,
+     this function returns -1. If repeated calls to fileGroup and the rest
+     ofthe file* functions are to be made and the file being accessed might
+     change or disappear, the ClearStatCache() should be called before the
+     call to the file* function.
+
+fileInode(filename)
+
+     fileInode returns the file's inode. If the file does not exist, or if
+     it for some other reason could not be accessed, this function returns
+     -1. If repeated calls to fileInode and the rest ofthe file* functions
+     are to be made and the file being accessed might change or disappear,
+     the ClearStatCache() should be called before the call to the file*
+     function.
+
+fileMtime(filename)
+
+     fileMtime returns the time of last data modification. If the file does
+     not exist, or if it for some other reason could not be accessed, this
+     function returns -1. If repeated calls to fileMtime and the rest ofthe
+     file* functions are to be made and the file being accessed might change
+     or disappear, the ClearStatCache() should be called before the call to
+     the file* function.
+
+fileOwner(filename)
+
+     fileOwner returns the uid of the owner of the file. If the file does
+     not exist, or if it for some other reason could not be accessed, this
+     function returns -1. If repeated calls to fileOwner and the rest ofthe
+     file* functions are to be made and the file being accessed might change
+     or disappear, the ClearStatCache() should be called before the call to
+     the file* function.
+
+filePerms(filename)
+
+     filePerms returns the permission bits of the file. This is the st_mode
+     field of the Unix C stat structure. If the file does not exist, or if
+     it for some other reason could not be accessed, this function returns
+     -1. If repeated calls to filePerms and the rest ofthe file* functions
+     are to be made and the file being accessed might change or disappear,
+     the ClearStatCache() should be called before the call to the file*
+     function.
+
+fileSize(filename)
+
+     fileSize returns the size of the file in bytes. If the file does not
+     exist, or if it for some other reason could not be accessed, this
+     function returns -1. If repeated calls to fileSize and the rest ofthe
+     file* functions are to be made and the file being accessed might change
+     or disappear, the ClearStatCache() should be called before the call to
+     the file* function.
+
+fileType(filename)
+
+     fileType returns the type of the file. The return values are one of:
+     "dir", "file","fifo","char", "block", or "link". These are for,
+     directory, regular file, fifo special, character special, block special
+     and symbolic link, respectively.
+
+Floor(value)
+
+     Floor() rounds a floating point value down to the previous integer. The
+     return value is of type double (floating point) such that it can be
+     used properly in complex equations. To get an integer type back, use:
+     $new = IntVal(Floor($value));
+     See also Ceil().
+
+Flush()
+
+     The Flush() function is used to Flush the output buffer. For the Apache
+     module, it flushes Apache's output buffer, and for the CGI version it
+     simply flushes stdout. When running as a CGI under Apache, the server
+     will buffer the CGI script's output, so this Flush() function won't
+     help much there. Look at running your script as an nph- script if you
+     are running the CGI version of PHP under the Apache web server. Or,
+     alternatively, run the Apache module version of PHP.
+
+fopen(filename,mode)
+
+     fopen() opens a file and returns a file pointer index. If the file
+     could not be opened the function returns -1. It is similar to the C
+     fopen() call. The filename argument is the relative or absolute path to
+     the file to be opened, and the mode argument is one of, "r", "r+", "w",
+     "w+", "a", "a+". See the Unix man page on the fopen() call for more
+     information. See also the popen() function description. See also the
+     fclose() function description.
+
+     Example:
+
+         $fp = fopen("/home/rasmus/file.txt","r");
+
+fputs(fp,string)
+
+     fputs() writes a line to a file opened by fopen(). Arguments are a file
+     pointer index as returned by fopen() and the string to write. Note that
+     the string argument may contain the special escape characters, \n, \r
+     and \t to output newlines, carriage returns and tabs respectively. See
+     also fgets().
+
+FPassThru(fp)
+
+     FPassThru() outputs all remaining data on fp directly. It is different
+     from ReadFile() in that it can also handle files opened with
+     fsockopen(). It differs from PassThru() in that it does not handle
+     commands, but opened files. FPassThru() returns the number of bytes
+     read and written.
+
+fseek(fp,pos)
+
+     fseek() positions a file pointer identified by the $fd argument which
+     is the return value of the fopen() call. The file pointer is positioned
+     at the beginning of the file plus the offset specified by the pos
+     argument. See also ftell() and rewind().
+
+fsockopen(hostname,port)
+
+     fsockopen() opens a socket connection and returns a file pointer index.
+     This file pointer index can be used by fgets, fputs and fclose.
+     Arguments are a hostname and a port number. Return values are: -3 if
+     the socket couldn't be created, -4 if the dns lookup on the hostname
+     failed, -5 if the connection was refused or it timed out, -6 if the
+     actual fdopen() call failed or -7 if the setvbuf() call failed. If the
+     port number is 0, then the hostname argument will be treated as a
+     filename of a Unix domain socket if your operating system support Unix
+     domain sockets.
+
+ftell(fp)
+
+     ftell() returns the position of a file pointer identified by the fp
+     argument which is the return value of the fopen() call. The position
+     can later be used as an argument to fseek(). See also fseek() and
+     rewind().
+
+getAccDir()
+
+     getAccDir returns the directory where PHP access configuration files
+     are kept. The access configuration filenames come from the numerical
+     user id of the user whose access configurations they represent.
+
+GetEnv(string)
+
+     GetEnv returns the value of the environment value specified by string.
+     Normally this function is not used because environment variables are
+     available to PHP/FI directly. If a reference is made to a variable
+     which is not found in the internal symbol table, then the environment
+     space is automatically searched. GetEnv should be used when it is
+     necessary to ensure that an environment variable has not been
+     overwritten by normal PHP/FI variable. Security mechanisms that rely on
+     http server-defined variables like REMOTE_ADDR and REMOTE_HOST should
+     load these variables using GetEnv as opposed to referencing them
+     directly as $REMOTE_ADDR to avoid someone making up a fake form and
+     posting the data to your server and thereby bypassing whatever security
+     mechanism you might have.
+
+getHostByName(domain_name)
+
+     getHostByName converts the given domain name into an IP address in
+     nnn.nnn.nnn.nnn format.
+
+getHostByAddr(ip_address)
+
+     getHostByAddr converts the given IP address in nnn.nnn.nnn.nnn format
+     into a fully qualified domain name.
+
+GetImageSize(filename)
+
+     The GetImageSize() function takes either a full path filename, or a
+     relative path relative to the location of the calling script. It
+     returns a 3 element array consisting of width, height and type. Width
+     and height are in pixels, and a type of 1 means GIF, a 2 indicates a
+     JPG file and a 3 indicates a PNG file. Other file types are not
+     supported. The fourth element in the returned array is a string
+     containing, "width=x height=y" that is suitable for using directly in
+     an IMG tag. It is important to note that the GD image library is not
+     needed to use this function. An example follows:
+
+         <?
+             $result = GetImageSize("img/flag.jpg");
+         >
+         <IMG SRC="img/flag.jpg" ?echo $result[3]> >
+
+getLastAccess()
+
+     getLastAccess returns the date and time in unix time format of the last
+     time the current page was access. This value can be passed to the
+     Date() function for formatting.
+     This function is only available if PHP was compiled with Access Logging
+     enabled.
+
+getLastbrowser()
+
+     getLastBrowser returns the identification string of browser the last
+     user to access the current page used.
+     This function is only available if PHP was compiled with Access Logging
+     enabled.
+
+getLastEmail()
+
+     getLastEmail returns the E-Mail address of the last user to access the
+     current page.
+     This function is only available if PHP was compiled with Access Logging
+     enabled.
+
+getLastHost()
+
+     getLastHost returns the hostname of the last user to access the current
+     page.
+     This function is only available if PHP was compiled with Access Logging
+     enabled.
+
+getLastMod()
+
+     getLastMod returns the date and time in unix time format of the last
+     time the current page was modified. This value can be passed to the
+     Date() function for formatting.
+     This function is only available if PHP was compiled with Access Logging
+     enabled.
+
+getLastref()
+
+     getLastRef returns the URL of the referring document of the last user
+     to access the current page.
+     This function is only available if PHP was compiled with Access Logging
+     enabled.
+
+getLogDir()
+
+     getLogDir returns the top-level directory under which PHP log files can
+     be found. The actual log files are in directories under this directory.
+     Each subdirectory is the numerical user id of the user to whom the log
+     files belong. Then within each directory a series of dbm log files are
+     found, each with the numerical inode of the file they represent as the
+     primary component of the filename.
+
+getMyInode()
+
+     getMyInode returns the numerical inode of the current HTML file.
+
+getMyPid()
+
+     getMyPid() returns the current process id of the PHP parsing process.
+
+getMyUid()
+
+     getMyUid returns the numerical user id of the owner of the current HTML
+     file.
+
+getRandMax()
+
+     getRandMax returns the maximum random number the Rand function will
+     return. If the value returned does not seem to be accurate, have a look
+     in the php.h source file in the PHP distribution for more information.
+
+getStartLogging()
+
+     getStartLogging returns the time and date in Unix time format when
+     logging commenced on the current page. This is more accurate when
+     mSQL-based logging is used since a timestamp is kept in each log file.
+     For dbm-logging the time returned is the time the user's log directory
+     was created.
+
+getToday()
+
+     getToday returns the total number of hits the current page has had
+     since 12 midnight local time.
+     This function is only available if PHP was compiled with Access Logging
+     enabled.
+
+getTotal()
+
+     getTotal returns the total number of hits the current page has had
+     since access logging was started on the page.
+     This function is only available if PHP was compiled with Access Logging
+     enabled.
+
+GetType(variable)
+
+     GetType returns the type of the variable. The return value is a string
+     and it is one of, "integer", "double" or "string". See also the
+     SetType() function
+
+gmDate(format,time)
+
+     gmDate is identical to the Date function except for the fact that it
+     uses Greenwich Mean Time instead of the current local time.
+
+Header(header_string)
+
+     The Header command is used at the top of an HTML file to send raw HTTP
+     header strings. See the HTTP Specification for more information on raw
+     http headers. Remember that the Header() command must be used before
+     any actual output is sent either by normal HTML tags or by PHP echo
+     commands.
+     Usage examples can be found in the HTTP Authentication section.
+
+HexDec(hex_string)
+
+     HexDec converts a hexadecimal string to a decimal number. See also the
+     DecHex() function.
+
+HtmlSpecialChars(string)
+
+     HtmlSpecialChars converts any characters with ascii codes in the string
+     argument between 160 and 255 inclusive to their corresponding HTML
+     Entity names. The function returns the converted string. The <, >, &
+     and " are also converted.
+
+ImageArc(im, cx, cy, w, h, s, e, col)
+
+     ImageArc draws a partial ellipse centered at cx,cy (top left is 0,0) in
+     the image represented by im. w and h specifies the ellipse's width and
+     height respectively while the start and end points are specified in
+     degrees indicated by the s and e arguments.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageChar(im, size, x, y, c, col)
+
+     ImageChar draws the character c in the image identified by im at
+     coordinates x,y (top left is 0,0) in colour col. The size argument can
+     be 1, 2, 3, 4 or 5 indicating the size of the font to be used. 1 is the
+     smallest and 5 is the largest.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageCharUp(im, size, x, y, c, col)
+
+     ImageCharUp draws the character c vertically in the image identified by
+     im at coordinates x,y (top left is 0,0) in colour col. The size
+     argument can be 1, 2, 3, 4 or 5 indicating the size of the font to be
+     used. 1 is the smallest and 5 is the largest.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageColorAllocate(im, red, green, blue)
+
+     ImageColorAllocate returns a colour identifier representing the colour
+     composed of the given RGB components. The im argument is the return
+     from the ImageCreate function. ImageColorAllocate must be called to
+     create each colour that is to be used in the image represented by im.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageColorTransparent(im, col)
+
+     ImageColorTransparent sets the transparent colour in the im image to
+     col. im is the image identifier returned by ImageCreate and col is the
+     colour identifier returned by ImageColorAllocate. This function is only
+     available if GD support has been enabled in PHP.
+
+ImageCopyResized(dst_im, src_im, dstX, dstY, srcX, srcY, dstW, dstH, srcW,
+srcH )
+
+     ImageCopyResized copies a rectangular portion of one image to another
+     image. dst_im is the destination image, src_im is the source image
+     identifier. If the source and destination coordinates and width and
+     heights differ, appropriate stretching or shrinking of the image
+     fragment will be performed. The coordinates refer to the upper left
+     corner. This function can be used to copy regions within the same image
+     (if dst_im is the same as src_im) but if the regions overlap the
+     results will be unpredictable.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageCreate(x_size, y_size)
+
+     ImageCreate returns an image identifier representing a blank image of
+     size x_size by y_size.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageCreateFromGif(filename)
+
+     ImageCreateFromGif returns an image identifier representing the image
+     obtained from the given filename.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageDestroy(im)
+
+     ImageDestroy frees any memory associated with image im. im is the image
+     identifier returned by the ImageCreate function. This function is only
+     available if GD support has been enabled in PHP.
+
+ImageFill(im, x, y, col)
+
+     ImageFill performs a flood fill starting at coordinate x,y (top left is
+     0,0) with colour col in image im.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageFilledPolygon(im, points, num_points, col)
+
+     ImageFilledPolygon creates a filled polygon in image im. points is a
+     PHP array containing the polygon's vertices. ie. points[0] = x0,
+     points[1] = y0, points[2] = x1, points[3] = y1, etc. num_points is the
+     total number of vertices.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageFilledRectangle(im, x1, y1, x2, y2, col)
+
+     ImageFilledRectangle creates a filled rectangle of colour col in image
+     im starting at upper left coordinate x1,y1 and ending at bottom right
+     coordinate x2,y2. 0,0 is the top left corner of the image.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageFillToBorder(im, x, y, border, col)
+
+     ImageFillToBorder performs a flood fill whose border colour is defined
+     by border. The starting point for the fill is x,y (top left is 0,0) and
+     the region is filled with colour col.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageGif(im [,filename])
+
+     ImageGif creates the GIF file in filename from the image im. The im
+     argument is the return from the ImageCreate function. The filename
+     argument is optional, and if left off, the raw image stream will be
+     returned directly. By sending an image/gif content-type using the
+     Header() function, you can create a PHP/FI script which returns GIF
+     images directly using this function.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageInterlace(im, interlace)
+
+     ImageInterlace turns the interlace bit on or off. If interlace is 1 the
+     im image will be interlaced, and if interlace is 0 the interlace bit is
+     turned off. This functions is only available if GD support has been
+     enabled in PHP.
+
+ImageLine(im, x1, y1, x2, y2, col)
+
+     ImageLine draws a line from x1,y1 to x2,y2 (top left is 0,0) in image
+     im of colour col.
+     This function is only available if GD support has been enabled in PHP.
+
+ImagePolygon(im, points, num_points, col)
+
+     ImagePolygon creates a polygon in image im. points is a PHP array
+     containing the polygon's vertices. ie. points[0] = x0, points[1] = y0,
+     points[2] = x1, points[3] = y1, etc. num_points is the total number of
+     vertices.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageRectangle(im, x1, y1, x2, y2, col)
+
+     ImageRectangle creates a rectangle of colour col in image im starting
+     at upper left coordinate x1,y1 and ending at bottom right coordinate
+     x2,y2. 0,0 is the top left corner of the image.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageSetPixel(im, x, y, col)
+
+     ImageSetPixel draws a pixel at x,y (top left is 0,0) in image im of
+     colour col.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageString(im, size, x, y, s, col)
+
+     ImageString draws the string s in the image identified by im at
+     coordinates x,y (top left is 0,0) in colour col. The size argument can
+     be 1, 2, 3, 4 or 5 indicating the size of the font to be used. 1 is the
+     smallest and 5 is the largest.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageStringUp(im, size, x, y, s, col)
+
+     ImageStringUp draws the string s vertically in the image identified by
+     im at coordinates x,y (top left is 0,0) in colour col. The size
+     argument can be 1, 2, 3, 4 or 5 indicating the size of the font to be
+     used. 1 is the smallest and 5 is the largest.
+     This function is only available if GD support has been enabled in PHP.
+
+ImageSX(im)
+
+     ImageSX returns the width of the image identified by im.
+
+ImageSY(im)
+
+     ImageSY returns the height of the image identified by im.
+
+Include(filename)
+
+     The Include command can be used to insert other files into the current
+     html file. This is extremely handy for headers and footers which may
+     need to be included in hundreds of HTML files. By using an include
+     command you then only need to modify the header or footer file in one
+     place when it needs to be changed. Since full PHP parsing is done on
+     the included file, you can also use the include command to include
+     common PHP scripts you may have written. Sort of like having a
+     primitive shared library of scripts you can call from your HTML file.
+     You can place such common library files in one directory and set PHP's
+     include path and not have to refer to the files with pathnames. For
+     Apache module users this can be configured with the phpIncludePath
+     directive, for CGI users with the PHP_INCLUDE_PATH environment
+     variable. This path is colon-separated just like $PATH is in your UNIX
+     shell. eg.
+
+         <?include("/path/filename.txt")>
+
+InitSyslog()
+
+     InitSyslog() defines some PHP variables that you need when using
+     OpenLog() and Syslog(). These variables are not defined by default for
+     efficiency reasons. The variables are named in the same way as in the
+     <syslog.h> C include file (such as $LOG_LOCAL0). See your syslog(3)
+     UNIX manual page for more details. See also InitSyslog(), Syslog() and
+     CloseLog().
+
+intval(variable)
+
+     intval returns the long integer value of the variable. See also the
+     strval() and doubleval() functions.
+
+IsSet(variable)
+
+     The IsSet function returns 1 if the given variable is defined, and 0 if
+     it isn't.
+
+Key(variable)
+
+     Key returns the key of the current array item. The current item is
+     determined by the position of the array pointer for the given variable.
+     This array pointer may be manipulated with the Reset(), End(), Next(),
+     and Prev() functions. This function is mainly used for determining the
+     key value for an item in an associative array, although it will work
+     for normal array as well.
+
+Link(target,link)
+
+     Link() creates a hard link. See the Symlink() function for creating
+     symbolic links (soft) links. See also ReadLink and LinkInfo functions.
+
+LinkInfo(path)
+
+     LinkInfo returns the st_dev field of the UNIX C stat structure returned
+     by the lstat system call. This function is used to verify if a link
+     (pointed to by path) really exists (using the same method as the
+     S_ISLNK macro defined in stat.h). Returns -1 in case of error.
+
+Log(arg)
+
+     Log returns the natural logarithm of arg.
+
+Log10(arg)
+
+     Log10 returns the base-10 logarithm of arg.
+
+LogAs(filename)
+
+     The LogAs() function will treat the hit on the current page as if it as
+     actually received on the argument filename.
+
+Mail(to,subject,message[,headers])
+
+     Mail automatically mails the message specified in the message argument
+     to the receiver specified in the to argument. Multiple recipients can
+     be specified by spaces between them in the to argument.
+
+     eg.
+
+        mail("rasmus@lerdorf.on.ca",
+             "My Subject",
+             "Line 1\nLine 2\nLine 3");
+
+     If a fourth string argument is passed, this string is inserted at the
+     end of the header, example:
+
+        mail("ssb@guardian.no", "the subject", $message,
+             "X-Mailer: PHP/FI " + phpversion());
+
+Max(array)
+
+     Max returns the maximum value of a PHP array. ie. it will search
+     through the entire array looking for the max element. If it is an array
+     of strings, the returned string is the string which would be
+     alphabetically last in the array if it were sorted.
+
+Md5(message)
+
+     Md5 returns the MD5 hash of a string value.
+
+mi_Close(connection_id)
+
+     mi_Close will close down the connection to an Illustra database
+     associated with the given connection identifier.
+
+     This function is only available if Illustra support has been enabled in
+     PHP.
+
+mi_Connect(database, username, password)
+
+     mi_Connect opens a connection to an Illustra database. Each of the
+     arguments should be a quoted string. This function returns a
+     connection_id. This identifier is needed by other Illustra functions.
+     You can have multiple connections open at once. The host to connect to
+     is governed by the MI_PARAMS file on the machine running the PHP
+     executable. No support as yet for remote invocation This function will
+     return -1 on error.
+
+     This function is only available if Illustra support has been enabled in
+     PHP.
+
+mi_DBname(connection_id)
+
+     mi_DBname will return the name of the database that the given Illustra
+     connection identifier is connected to.
+
+     This function is only available if Illustra support has been enabled in
+     PHP.
+
+mi_Exec(connection_id, query_string)
+
+     mi_Exec will send an SQL statement to the Illustra database specified
+     by the connection_id. The connection_id must be a valid identifier that
+     was returned by mi_Connect. The return value of this function is an
+     identifier to be used to access the results from other Illustra
+     functions. This function will return -1 on error.
+
+     This function is only available if Illustra support has been enabled in
+     PHP.
+
+mi_FieldName(connection_id, result_id, field_number)
+
+     mi_FieldName will return the name of the field occupying the given
+     column number with the given Illustra result and connection
+     identifiers. Field numbering starts from 0.
+
+     This function will return -1 on error.
+
+     This function is only available if Illustra support has been enabled in
+     PHP.
+
+mi_FieldNum(connection_id, result_id, field_name)
+
+     mi_FieldNum will return the number of the column slot that corresponds
+     to the named field in the given Illustra result identifier. Field
+     numbering starts at 0. This function will return -1 on error.
+
+     This function is only available if Illustra support has been enabled in
+     PHP.
+
+mi_NumFields(connection_id, result_id)
+
+     mi_NumFields will return the number of fields (columns) in an Illustra
+     result. The argument is a valid result identifier returned by mi_Exec.
+     This function will return -1 on error.
+
+     This function is only available if Illustra support has been enabled in
+     PHP.
+
+mi_NumRows(connection_id, result_id)
+
+     mi_NumRows will return the number of rows in an Illustra result. The
+     argument is a valid result identifier returned by mi_Exec. This
+     function will return -1 on error.
+
+     This function is only available if Illustra support has been enabled in
+     PHP.
+
+mi_Result(connection_id, result_id, row_number, field name/index)
+
+     mi_Result will return values from a result identifier produced by
+     mi_Exec. The row_number and field name specify what cell in the table
+     of results to return. Row numbering starts from 0. Instead of naming
+     the field, you may use the field index as an unquoted number. Field
+     indices start from 0.
+
+     All values returned from the database are in String form, since no
+     type-detection is available at the present.
+
+     This function is only available if Illustra support has been enabled in
+     PHP.
+
+Microtime()
+
+     Microtime() returns a string "msec sec" where sec is number of seconds
+     since 00:00 GMT, Jan 1, 1970, and msec is the microseconds part (as
+     fraction of seconds). Ex "0.87633900 825010464".
+     This function is only available on operating systems that support the
+     gettimeofday() system call.
+
+Min(array)
+
+     Min returns the minimum value of a PHP array. ie. it will search
+     through the entire array looking for the min element. If it is an array
+     of strings, the returned string is the string which would be
+     alphabetically first in the array if it were sorted.
+
+MkDir(dir,mode)
+
+     MkDir creates a directory. The mode parameter must be given in octal
+     notation. eg. MkDir("DirName",0755);
+
+MkTime(hour,min,sec,mon,day,year)
+
+     MkTime returns a time in Unix timestamp (long integer) format which
+     corresponds to the date and time specified by the arguments. Arguments
+     may be left out in which case the given component is set to the current
+     value according to the current local time and date. These left out
+     arguments may only be left out from right to left. ie.
+     MkTime(hour,min,sec) is valid, but MkTime(mon,day,year) is not valid.
+     Note that this function can be very handy as a tool for doing both date
+     arithmetic and date validation. You can feed it invalid parameters,
+     such as a month greater than 12, or a day greater than 31 and it will
+     figure out the right date anyway. It will also generate an error
+     message if any of the parameters are outside the normal values. Use the
+     SetErrorReporting(0) function to turn this error reporting off before
+     calling the function and you may then check the $phperrmsg for any
+     errors that may have occurred.
+
+     eg.
+
+             SetErrorReporting(0);
+             $a = MkTime(0,0,0,13,1,1997);
+             SetErrorReporting(1);
+             echo $phperrmsg;
+
+msql($database,$query)
+
+     msql sends an mSQL query. Arguments are the database name and the query
+     string. ie. <?msql("MyDatabase" , "select * from table")>. The return
+     value from this function is a result identifier to be used to access
+     the results from the other msql_ functions. A result identifier is a
+     positive integer. The function returns 0 when no result identifier is
+     created. This is the case with any queries that do not return anything,
+     such as create, update, drop, insert and delete. The function will
+     return -1 if an error occurs. A string describing the error will be
+     placed in $phperrmsg, and unless the function was called as @msql()
+     then this error string will also be printed out. For mSQL 2.0, the
+     $result variable will contain the number of rows affected by the SQL
+     command performed. If you want your application to be portable to mSQL
+     1.0, do not rely on this.
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_close()
+
+     msql_Close closes the socket connection to the msql daemon, if an open
+     connection exists. Note, since only one concurrent mSQL session can be
+     open at any one time, this function does not take an argument.
+
+msql_connect($hostname)
+
+     msql_Connect specifies the host name or IP on which the mSQL database
+     engine resides. This is equivalent to the msqlConnect() function in the
+     mSQL C API. The one difference between this function and the C API
+     equivalent is that if the function isn't called, a connection to the
+     local host is made by default on the first call to the msql() function.
+     And, there is no need for an msql_close function since only one
+     connection may be active at any one time. If a second call to
+     msql_connect() is made in a file, then the connection to the first host
+     is automatically closed. To explicitly connect to the msql daemon on
+     the local host, use: <?msql_connect("localhost")>
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_CreateDB($database)
+
+     msql_CreateDB creates the given database.
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_dbName($result,$i)
+
+     msql_dbName returns the database name stored in position $i of the
+     result pointer returned from the msql_ListDbs() function. The
+     msql_NumRows() function can be used to determine how many database
+     names are available.
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_DropDB($database)
+
+     msql_DropDB deletes the given mSQL database. Use this with caution as
+     all data in the database will be lost.
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_FieldFlags($result,$i)
+
+     msql_FieldFlags returns the field flags of the specified field.
+     Currently this is either, "not null", "primary key", a combination of
+     the two or "" (an empty string).
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_FieldLen($result,$i)
+
+     msql_FieldLen returns the length of the specified field.
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_FieldName($result,$i)
+
+     msql_FieldName returns the name of the specified field. Arguments to
+     the function is the result identifier and the field index. ie.
+     msql_FieldName($result,2); will return the name of the second field in
+     the result associated with the result identifier.
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_FieldType($result,$i)
+
+     msql_FieldType is similar to the msql_FieldName() function. The
+     arguments are identical, but the field type is returned. This will be
+     one of "int", "char" or "real".
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_FreeResult($result)
+
+     msql_FreeResult only needs to be called if you are worried about using
+     too much memory while your script is running. All result memory will
+     automatically be freed when the script is finished. But, if you are
+     sure you are not going to need the result data anymore in a script, you
+     may call msql_freeresult with the result identifier as an argument and
+     the associated result memory will be freed.
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_ListDBs()
+
+     msql_ListDBs will return a result pointer containing the databases
+     available from the current mSQL daemon. Use the msql_dbName() function
+     to traverse this result pointer.
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_Listfields($database,$tablename)
+
+     msql_listfields retrieves information about the the given tablename.
+     Arguments are the database name and the table name. A result pointer is
+     returned which can be used with msql_fieldflags, msql_fieldlen,
+     msql_fieldname, msql_fieldtype. A result identifier is a positive
+     integer. The function returns -1 if a error occurs. A string describing
+     the error will be placed in $phperrmsg, and unless the function was
+     called as @msql() then this error string will also be printed out.
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_ListTables($database)
+
+     msql_ListTables takes a database name and result pointer much like the
+     msql() function. The msql_TableName() function should be used to
+     extract the actual table names from the result pointer.
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_NumFields($result)
+
+     msql_NumFields returns the number of fields in a result. The argument
+     is the result identifier returned by the msql() function.
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_NumRows($result)
+
+     msql_NumRows simply returns the number of rows in a result. The
+      argument is the result identifier returned by the msql() function.
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_RegCase(string)
+
+     msql_RegCase takes a string argument and converts it to the regular
+     expression needed to send to mSQL in order to get a case insensitive
+     match. This turns a string like "abc" into "[Aa][Bb][Cc]".
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_Result($result,$i,field)
+
+     msql_Result displays a field from a returned record. Arguments are the
+     result identifier returned by the msql() function, an integer which is
+     the index of the record to be viewed and a field name. The field
+     argument supports the "table.field" syntax for handling results from a
+     join. This function is perhaps best illustrated with a complete
+     example:
+
+         <?
+           $name = "bob";
+           $result = msql($database,"select * from table where firstname='$name'");
+           $num = msql_numrows($result);
+           echo "$num records found!<p>";
+           $i=0;
+           while($i<$num);
+             echo msql_result($result,$i,"fullname");
+             echo "<br>";
+             echo msql_result($result,$i,"address");
+             echo "<br>";
+             $i++;
+           endwhile;
+         >
+
+     The above script connects to the mSQL engine on the local machine, sets
+     the name variable to bob and sends a query which asks for all the
+     fields from a table where the firstname field is set to bob. It then
+     displays the number of records it found after which it loops through
+     each of the found records and displays the fullname and address fields
+     for each record. As you can see, it would be trivial to add HTML markup
+     tags around the printed fields to format the results in a table or in
+     whatever manner is desired. Note that there is no msql_connect() call.
+     msql_connect need only be called if a connection to a remote database
+     is desired.
+
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+msql_TableName($result,$i)
+
+     msql_TableName takes a result pointer returned by the msql_ListTables()
+     function as well as an integer index and returns the name of a table.
+     The msql_NumRows() function may be used to determine the number of
+     tables in the result pointer. An example would be:
+
+         <?
+           $result = msql_listtables("dbname");
+           $i=0;
+           while($i <  msql_numrows($result));
+             $tb_names[$i]=msql_tablename($result, $i);
+             echo $tb_names[$i];
+             echo "<BR>";
+             $i++;
+           endwhile;
+         >
+
+     This function is only available if mSQL support has been enabled in
+     PHP.
+
+mysql($database,$query)
+
+     mysql sends a mysql query. Arguments are the database name and the
+     query string. ie. <?mysql("MyDatabase" , "select * from table")>. The
+     return value from this function is a result identifier to be used to
+     access the results from the other mysql_ functions. A result identifier
+     is a positive integer. The function returns 0 when no result identifier
+     is created. This is the case with any queries that do not return
+     anything, such as create, update, drop, insert and delete. The function
+     will return -1 if an error occurs. A string describing the error will
+     be placed in $phperrmsg, and unless the function was called as @mysql()
+     then this error string will also be printed out.
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_affected_rows()
+
+     mysql_affected_rows() returns number of rows affected by the last
+     INSERT, UPDATE or DELETE query.
+
+mysql_close()
+
+     mysql_Close closes the socket connection to the mysql daemon, if an
+     open connection exists.
+
+mysql_connect($hostname [,username [,password]])
+
+     mysql_Connect specifies the host name or IP on which the mysql database
+     engine resides. This is equivalent to the mysqlConnect() function in
+     the mysql C API. The one difference between this function and the C API
+     equivalent is that if the function isn't called, a connection to the
+     local host is made by default on the first call to the mysql()
+     function. And, there is no need for an mysql_close function since only
+     one connection may be active at any one time. If a second call to
+     mysql_connect() is made in a file, then the connection to the first
+     host is automatically closed.
+
+     An optional username and password may be provided. Note that when PHP
+     is compiled to run in SAFE MODE then the username must either be the
+     same as the owner of the file being processed, or the owner of the
+     httpd process (usually nobody). Any other username will fail.
+
+     To explicitly connect to the mysql daemon on the local host, use:
+     <?mysql_connect("localhost")>
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_CreateDB($database)
+
+     mysql_CreateDB creates the given database.
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_dbName($result,$i)
+
+     mysql_dbName returns the database name stored in position $i of the
+     result pointer returned from the mysql_ListDbs() function. The
+     mysql_NumRows() function can be used to determine how many database
+     names are available.
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_DropDB($database)
+
+     mysql_DropDB deletes the given mysql database. Use this with caution as
+     all data in the database will be lost.
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_FieldFlags($result,$i)
+
+     mysql_FieldFlags returns the field flags of the specified field.
+     Currently this is either, "not null", "primary key", a combination of
+     the two or "" (an empty string).
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_FieldLen($result,$i)
+
+     mysql_FieldLen returns the length of the specified field.
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_FieldName($result,$i)
+
+     mysql_FieldName returns the name of the specified field. Arguments to
+     the function is the result identifier and the field index. ie.
+     mysql_FieldName($result,2); will return the name of the second field in
+     the result associated with the result identifier.
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_FieldType($result,$i)
+
+     mysql_FieldType is similar to the mysql_FieldName() function. The
+     arguments are identical, but the field type is returned. This will be
+     one of "int", "char" or "real".
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_FreeResult($result)
+
+     mysql_FreeResult only needs to be called if you are worried about using
+     too much memory while your script is running. All result memory will
+     automatically be freed when the script is finished. But, if you are
+     sure you are not going to need the result data anymore in a script, you
+     may call mysql_freeresult with the result identifier as an argument and
+     the associated result memory will be freed.
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_insert_id()
+
+     mysql_insert_id() returns the ID generated for an AUTO_INCREMENT field.
+     This function takes no arguments. It will return the auto-generated ID
+     returned by the last INSERT query performed.
+
+mysql_ListDBs()
+
+     mysql_ListDBs will return a result pointer containing the databases
+     available from the current mysql daemon. Use the mysql_dbName()
+     function to traverse this result pointer.
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_Listfields($database,$tablename)
+
+     mysql_listfields retrieves information about the the given tablename.
+     Arguments are the database name and the table name. A result pointer is
+     returned which can be used with mysql_fieldflags, mysql_fieldlen,
+     mysql_fieldname, mysql_fieldtype. A result identifier is a positive
+     integer. The function returns -1 if a error occurs. A string describing
+     the error will be placed in $phperrmsg, and unless the function was
+     called as @mysql() then this error string will also be printed out.
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_ListTables($database)
+
+     mysql_ListTables takes a database name and result pointer much like the
+     mysql() function. The mysql_TableName() function should be used to
+     extract the actual table names from the result pointer.
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_NumFields($result)
+
+     mysql_NumFields returns the number of fields in a result. The argument
+     is the result identifier returned by the mysql() function.
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_NumRows($result)
+
+     mysql_NumRows simply returns the number of rows in a result. The
+     argument is the result identifier returned by the mysql() function.
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_Result($result,$i,field)
+
+     mysql_Result displays a field from a returned record. Arguments are the
+     result identifier returned by the mysql() function, an integer which is
+     the index of the record to be viewed and a field name. The field
+     argument supports the "table.field" syntax for handling results from a
+     join. One difference between mSQL 1.0 and mysql is that mysql supports
+     functions that can act on the result data. These functions can be
+     applied in this function. This function is perhaps best illustrated
+     with a complete example:
+
+         <?
+           $name = "bob";
+           $result = mysql($database,"select * from table where firstname='$name'");
+           $num = mysql_numrows($result);
+           echo "$num records found!<p>";
+           $i=0;
+           while($i<$num);
+             echo mysql_result($result,$i,"lcase(fullname)");
+             echo "<br>";
+             echo mysql_result($result,$i,"address");
+             echo "<br>";
+             $i++;
+           endwhile;
+         >
+
+     The above script connects to the mysql engine on the local machine,
+     sets the name variable to bob and sends a query which asks for all the
+     fields from a table where the firstname field is set to bob. It then
+     displays the number of records it found after which it loops through
+     each of the found records and displays the fullname and address fields
+     for each record. The lcase() call in the result function changes the
+     returned string to lower case. For a complete set of functions that can
+     be applied to the result data, see your mysql documentation. As you can
+     see, it would be trivial to add HTML markup tags around the printed
+     fields to format the results in a table or in whatever manner is
+     desired. Note that there is no mysql_connect() call. mysql_connect need
+     only be called if a connection to a remote database is desired.
+
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+mysql_TableName($result,$i)
+
+     mysql_TableName takes a result pointer returned by the
+     mysql_ListTables() function as well as an integer index and returns the
+     name of a table. The mysql_NumRows() function may be used to determine
+     the number of tables in the result pointer. An example would be:
+
+         <?
+           $result = mysql_listtables("dbname");
+           $i=0;
+           while($i <  mysql_numrows($result));
+             $tb_names[$i]=mysql_tablename($result, $i);
+             echo $tb_names[$i];
+             echo "<BR>";
+             $i++;
+           endwhile;
+         >
+
+     This function is only available if mysql support has been enabled in
+     PHP.
+
+Next(variable)
+
+     Next moves the internal array pointer to the next item in the array.
+     This happens automatically when an array is accessed using the
+     non-indexed method ($array[]). The function returns the value of the
+     new item. This function can be used to move the pointer forward without
+     having to access the array explicitly. One use would be to traverse an
+     associative array and only printing out the keys of the array and not
+     the actual contents.
+
+         <?
+           Reset($array);
+           $i=0;
+           while($i < count($array));
+             echo key($array);
+             next($array);
+             $i++;
+           endwhile;
+         >
+
+OctDec(octal_number)
+
+     OctDec converts an octal number to a decimal number. See also DecOct().
+
+openDir(directory)
+
+     openDir opens the specified directory and places an internal pointer to
+     the beginning of the directory. Directory entries are read using the
+     readDir function, and an opened directory should be closed with the
+     closeDir function.
+
+OpenLog(ident,options,facility)
+
+     OpenLog() initializes the system for further Syslog() calls. See the
+     openlog(3) UNIX man page for more details. See also InitSyslog(),
+     Syslog() and CloseLog().
+
+Ora_Bind(cursor_ind, php_variable_name, sql_variable_name, size)
+     Ora_Bind() performs binding of PHP variables with Oracle ones.
+
+     Function parameters are:
+     cursor_id - oracle cursor id for _parsed_ SQL query or PL/SQL block;
+     php_variable_name - variable name in PHP script without leading '$'
+     sql_variable_name - variable name in SQL with leading colon
+     size - maximal number of bytes to be taken into account at binding
+
+     Notes:
+     1) PHP variable SHOULD be initialised with at least size bytes length
+     string even it is return-only variable.
+     2) Ora_Bind() SHOULD be used after Ora_Parse and before Ora_Exec. In
+     case of re-parsing the SQL sentence, all used variables have to be
+     re-bound.
+
+     Ora_Bind() returns 0 upon success, -1 upon failure.
+
+     There is an example of Ora_Bind() usage:
+
+             /* This is the PHP variable to be bound */
+             $rc  = "12345";
+
+             /* This is the SQL query. */
+             $query = "SELECT * FROM my_table where my_index = :indiana";
+
+             ........
+
+             if (Ora_Parse($cursor, $query) < 0) {
+                 echo("Parse failed!\n"
+                 Ora_Logoff($conn);
+                 exit;
+             }
+
+             if (Ora_Bind($cursor, "rc", ":indiana", strlen($rc)) < 0) {
+                 echo("Binding failed!\n"
+                 Ora_Logoff($conn);
+                 exit;
+             }
+
+             /* Execute the SQL statement associated with $cursor and
+             prepare storage for select-list items. */
+             $ncols = Ora_Exec($cursor);
+
+             ......
+
+Ora_Close(conn_ind)
+     Ora_Close() closes the Oracle connection identified by conn_ind.
+     Returns 0 upon success, -1 upon failure.
+
+Ora_Commit(conn_ind)
+     Commits the current transaction on conn_ind. The current transaction
+     starts from the Ora_Logon() call or from the last Ora_Commit() or
+     Ora_Rollback(), and lasts until an Ora_Commit(), Ora_Rollback() or
+     Ora_Logoff() call is issued. Ora_Commit() returns -1 (and an error
+     message) upon failure.
+
+Ora_CommitOff(conn_ind)
+     Ora_CommitOff() turns off autocommit (automatic commit of every SQL
+     data manipulation statement) on the Oracle connection conn_ind.
+
+Ora_CommitOn(conn_ind)
+     Ora_CommitOff() turns on autocommit (automatic commit of every SQL data
+     manipulation statement) on the Oracle connection conn_ind.
+
+Ora_Exec(cursor_ind)
+     Ora_Exec() executes the SQL statement associated with cursor_ind and
+     prepares storage for select-list items. The return value is the number
+     of columns for selects, or -1 on error.
+
+Ora_Fetch(cursor_ind)
+     Ora_Fetch() retrieves a row from the database. Returns 1 if a column
+     was retrieved, 0 if there are no more columns to retrieve or -1 on
+     error.
+
+Ora_GetColumn(cursor_ind, column)
+     Ora_GetColumn() fetches data for a single column in a returned row.
+     Ora_Fetch() must have been called prior to Ora_GetColumn().
+
+Ora_Logoff(conn_ind)
+     Ora_Logoff() disconnects the logon data area belonging to conn_ind and
+     frees used Oracle resources.
+
+Ora_Logon(userid, password)
+     Ora_Logon() establishes a connection between PHP and an Oracle database
+     with the given user id and password. Returns 0 on success and -1 on
+     failure.
+
+Ora_Open(conn_ind)
+     Ora_Open() opens a cursor in Oracle that maintains state information
+     about the processing of a SQL statement. Returns a cursor index or -1
+     on error.
+
+Ora_Parse(cursor_ind, sql_statement [, defer])
+     Ora_Parse() parses a SQL statement or PL/SQL block and associates it
+     with a cursor. An optional third argument can be set to 1 to defer the
+     parse. Returns 0 on success or -1 on error.
+
+Ora_Rollback(cursor_ind)
+     Ora_Rollback() rolls back the current transaction. See Ora_Commit() for
+     a definition of the current transaction.
+
+Ord(arg)
+
+     Ord returns the ASCII value of the first character of arg.
+
+Parse_Str(arg)
+
+     Parse_str takes a string identical to a regular URL encoded string and
+     extracts variables and their values.
+     ex.
+
+         <? parse_str("a[]=hello+world&a[]=second+variable");
+             echo $a[],"<br>";
+             echo $a[],"<br>";
+         >
+
+     produces
+
+     hello world
+     second variable
+
+PassThru(command_string [,return_var])
+
+     The PassThru() function is similar to the Exec() function in that it
+     executes a Unix command. If the return_var argument is present, the
+     return status of the Unix command will be placed here. This command
+     should be used in place of Exec or System when the output from the Unix
+     command is binary data which needs to be passed directly back to the
+     browser. A common use for this is to execute something like the pbmplus
+     utilities that can output an image stream directly. By setting the
+     content-type to image/gif and then calling a pbmplus program to output
+     a gif, you can create PHP/FI scripts that output images directly.
+
+pclose(fp)
+
+     Pclose closes a pipe opened using the popen() function.
+
+pg_Close(connection_id)
+
+     pg_Close will close down the connection to a Postgres database
+     associated with the given connection identifier.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_Connect(host, port, options, tty, dbname)
+
+     pg_Connect opens a connection to a Postgres database. Each of the
+     arguments should be a quoted string, including the port number. The
+     options and tty arguments are optional and can be empty strings. This
+     function returns a connection_id. This identifier is needed by other
+     Postgres functions. You can have multiple connections open at once.
+     This function will return 0 on error.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_DBname(connection_id)
+
+     pg_DBname will return the name of the database that the given Postgres
+     connection identifier is connected to.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_ErrorMessage(connection_id)
+
+     If an error occured on the last database action for which a valid
+     connection exists, this function will return a string containing the
+     error message generated by the back-end server.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_Exec(connection_id, query_string)
+
+     pg_Exec will send an SQL statement to the Postgres database specified
+     by the connection_id. The connection_id must be a valid identifier that
+     was returned by pg_Connect. The return value of this function is an
+     identifier to be used to access the results from other Postgres
+     functions. This function will return 0 on error. It will return 1 when
+     the command executed correctly but are not expected to returned data
+     (insert or update commands, for example). Note that selects which
+     return no data will still return a valid result greater than 1.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_FieldName(result_id, field_number)
+
+     pg_FieldName will return the name of the field occupying the given
+     column number in the given Postgres result identifier. Field numbering
+     starts from 0.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_FieldPrtLen(result_id, row_number, field_name)
+
+     pg_FieldPrtLen will return the actual printed length (number of
+     characters) of a specific value in a Postgres result. Row numbering
+     starts at 0. This function will return -1 on an error.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_FieldNum(result_id, field_name)
+
+     pg_FieldNum will return the number of the column slot that corresponds
+     to the named field in the given Postgres result identifier. Field
+     numbering starts at 0. This function will return -1 on error.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_FieldSize(result_id, field_name)
+
+     pg_FieldSize will return the internal storage size (in bytes) of the
+     named field in the given Postgres result. A field size of 0 indicates a
+     variable length field. This function will return -1 on error.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_FieldType(result_id, field_number)
+
+     pg_FieldType will return a string containing the type name of the given
+     field in the given Postgres result identifier. Field numbering starts
+     at 0.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_FreeResult(result_id)
+
+     pg_FreeResult only needs to be called if you are worried about using
+     too much memory while your script is running. All result memory will
+     automatically be freed when the script is finished. But, if you are
+     sure you are not going to need the result data anymore in a script, you
+     may call pg_freeresult with the result identifier as an argument and
+     the associated result memory will be freed.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_GetLastOid()
+
+     pg_GetLastOid can be used to retrieve the Oid assigned to an inserted
+     tuple if the last command sent via pg_Exec was an SQL Insert. This
+     function will return a positive integer if there was a valid Oid. It
+     will return -1 if an error occured or the last command sent via pg_Exec
+     was not an Insert.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_Host(connection_id)
+
+     pg_Host will return the host name the the given Postgres connection
+     identifier is connected to.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_NumFields(result_id)
+
+     pg_NumFields will return the number of fields (columns) in a Postgres
+     result. The argument is a valid result identifier returned by pg_Exec.
+     This function will return -1 on error.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_NumRows(result_id)
+
+     pg_NumRows will return the number of rows in a Postgres result. The
+     argument is a valid result identifier returned by pg_Exec. This
+     function will return -1 on error.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_Options(connection_id)
+
+     pg_Options will return a string containing the options specified on the
+     given Postgres connection identifier.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_Port(connection_id)
+
+     pg_Port will return the port number that the given Postgres connection
+     identifier is connected to.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_Result(result_id, row_number, field name/index)
+
+     pg_Result will return values from a result identifier produced by
+     pg_Exec. The row_number and field name specify what cell in the table
+     of results to return. Row numbering starts from 0. Instead of naming
+     the field, you may use the field index as an unquoted number. Field
+     indices start from 0.
+
+     Postgres has many built in types and only the basic ones are directly
+     supported here. All forms of integer, boolean and oid types are
+     returned as integer values. All forms of float, and real types are
+     returned as double values. All other types, including arrays are
+     returned as strings formatted in the same default Postgres manner that
+     you would see in the 'monitor' or 'psql' programs.
+
+     Support for returning PHP arrays of numerical and string data from a
+     Postgres result is planned for a later date.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+pg_tty(connection_id)
+
+     pg_tty will return the tty name that server side debugging output is
+     sent to on the given Postgres connection identifier.
+
+     This function is only available if Postgres support has been enabled in
+     PHP.
+
+phpInfo()
+
+     phpInfo prints the same page you get when adding "?info" to a PHP/FI
+     parsed URL or when you run the php.cgi binary by itself. It is
+     especially useful for debugging scripts in the Apache module version
+     since it displays a number of useful internal data.
+
+phpVersion()
+
+     phpVersion returns the version number of PHP/FI currently running.
+
+popen(command,mode)
+
+     Popen opens a pipe to a command and returns a file pointer index. This
+     file pointer index can be used by fgets, fputs and fclose. Arguments
+     are the command to run and the mode. The mode can be either "r" for
+     read or "w" for write. See the UNIX C library popen man page for more
+     details. Any file opened with popen() should be closed using the
+     pclose() function.
+
+pos(var)
+
+     The Pos() function returns the numerical position of an array element
+     within that array. This is not very useful for normal arrays, but for
+     associative arrays it can be handy.
+
+pow(x,y)
+
+     Evaluates x raised to the power of y. See also Exp()
+
+Prev(variable)
+
+     Prev moves the internal array pointer for the given variable to the
+     previous item in the array. If already at the beginning of the list,
+     the pointer will point to the first item. The function returns the
+     value of the new item. This function is useful for traversing an
+     associative array in reverse order. See the example in the End()
+     definition. Also see Next().
+
+PutEnv(string)
+
+     PutEnv puts the given string in the environment. Not extremely useful
+     since the local environment variables are wiped out when PHP is done
+     with a page, but in some cases it is useful if other things called from
+     within a PHP script checks environment variables. For example, if you
+     want to run multiple mSQL daemon processes, you will need to use PutEnv
+     to switch back and forth between the different sockets.
+
+QuoteMeta(arg)
+
+     QuoteMeta returns a string composed of arg with any regular expression
+     special characters escaped with a backslash.
+
+Rand()
+
+     Rand returns a random number between 0 and RANDMAX. Remember to seed
+     your random number generator with a call to srand() before calling
+     rand(). You only need to seed the random number generator once. RANDMAX
+     can be determined with the getRandMax function. Normally a specific
+     range is chosen by simply using the modulus operator on the result.
+
+readDir()
+
+     readDir reads the next entry from the currently open directory
+     structure. Once an entry is read, the pointer is advanced to the next
+     entry in the directory and the next call to this function will return
+     the next entry in the directory. Use the openDir function to open a
+     directory before calling this function.
+
+ReadFile(filename)
+
+     $size = ReadFile(Filename) - Reads the file filename and simply outputs
+     it directly. It returns the number of bytes actually read. It is
+     different from the File() command in that it does not store the file in
+     memory, and it is safe for use on binary files. This function is
+     generally used where one might otherwise do a PassThru("cat filename").
+     Using ReadFile is more efficient.
+
+ReadLink(path)
+     ReadLink does the same as the readlink C function and returns the
+     contents of the symbolic link path or -1 in case of error. See also
+     LinkInfo.
+
+reg_Match(expr,arg[,regs])
+
+     This function has been replaced by the ereg() function. It is however
+     still available for backwards compatibility.
+     reg_Match returns non-zero if the regular expression is matched in the
+     argument string. For example, the condition, <?if (reg_match("^This.*",
+     "This is an example string")> would be true since the "^This.*"
+     expression says to match the word This at the beginning of the string
+     and then match any characters afterwards. If the regs argument is
+     present, then match registers are filled into positions 0-10 in the
+     array named by the regs argument. Register 0 will always contain the
+     full matched string. For more information on regular expressions, see
+     the regular expression section of this document.
+
+reg_replace(expr,replace,arg)
+
+     This function has been replaced by the ereg_replace() function. It is
+     however still available for backwards compatibility.
+     reg_Replace scans the entire argument string and replaces any portions
+     of the string matched by the given expression with the replacement
+     string. For example, in the string, "This is an example string" we
+     could very easily replace every space with a dash with the command:
+     reg_replace(" ","-","This is an example string").For more information
+     on regular expressions, see the regular expression section of this
+     document.
+
+reg_Search(expr,arg[,regs])
+
+     This function has been replaced by the ereg() function. It is however
+     still available for backwards compatibility.
+     reg_Search will scan the entire argument string for any matches to the
+     given regular expression. If a match is found, it will return the
+     portion of the string starting at where the match occurred. If no match
+     is found a zero-length string is returned. If the regs argument is
+     present, then match registers are filled into positions 0-10 in the
+     array named by the regs argument. Register 0 will always be assigned
+     the full matched string. For more information on regular expressions,
+     see the regular expression section of this document.
+
+Rename(old,new)
+
+     Rename filename old to new. Similar to the Unix C rename() function.
+
+Reset(variable)
+
+     Reset moves the internal array pointer for the given array variable to
+     the first item of the array and returns the value of this item. This is
+     useful for traversing associative and non-indexed arrays. See also
+     End() and Next(). The following example traverses an associative array:
+
+         <?
+           Reset($array);
+           $i=0;
+           while($i < count($array));
+             echo $array[]; /* pointer automatically moves ahead one */
+             $i++;
+           endwhile;
+         >
+
+return(value)
+
+     Return exits the current function call and returns the specified value
+     back to the caller. See the section on User-Defined Functions for more
+     information.
+
+rewind($fd)
+
+     rewind() resets a file pointer identified by the $fd argument which is
+     the return value of the fopen() call. The file pointer is positioned at
+     the beginning of the file. See also ftell() and fseek().
+
+rewindDir()
+
+     rewindDir moves the current directory pointer back to the beginning of
+     the directory. Use the openDir function to open a directory before
+     calling this function.
+
+RmDir(dir)
+
+     RmDir() removes the given directory. See the Unlink() function for
+     removing regular files.
+
+SetCookie(name,value,expire,path,domain,secure)
+
+     SetCookie() defines a cookie to be sent along with the rest of the
+     header information. All the arguments except the name argument are
+     optional. If only the name argument is present, the cookie by that name
+     will be deleted from the remote client. You may also replace any
+     argument with an empty string ("") in order to skip that argument. The
+     expire and secure arguments are integers and cannot be skipped with an
+     empty string. Use a zero (0) instead. The expire argument is a regular
+     Unix time integer as returned by the time() or mktime() functions. Some
+     examples follow:
+
+         SetCookie("TestCookie","Test Value");
+         SetCookie("TestCookie",$value,time()+3600);  /* expire in 1 hour */
+         SetCookie("TestCookie",$value,time()+3600,"/~rasmus/",".utoronto.ca",1);
+
+     Note that the value portion of the cookie will automatically be
+     urlencoded when you send the cookie, and when it is received, it is
+     automatically decoded and assigned to a variable by the same name as
+     the cookie name. ie. to see the contents of our test cookie in a
+     script, simply do:
+
+         echo $TestCookie;
+
+SetErrorReporting(arg)
+
+     SetErrorReporting sets the current error reporting state to the value
+     of arg. If non-zero, errors will be printed, and if 0 they won't be.
+     The function returns the previous error reporting state. This is a more
+     general way of disabling error reporting than by preceding individual
+     functions with a '@' character. See the section on Suppressing Errors
+     from function calls for more information.
+
+SetLogging(arg)
+
+     SetLogging() either enables or disables the logging of access
+     statistics for a page. If arg is non-zero, logging will be enabled, if
+     zero, disabled.
+
+SetShowInfo(arg)
+
+     SetShowInfo() either enables or disables the information footer at the
+     bottom of all pages loaded through PHP. If arg is non-zero, the footers
+     will be enabled, if zero, disabled.
+
+SetType(variable,type)
+
+     SetType sets the type of a variable. The type argument is one of,
+     "integer", "double" or "string". See also the GetType() function.
+
+shl(n,b)
+
+     Shift the value n left b bits.
+
+shr(n,b)
+
+     Shift the value n right b bits.
+
+Sin(arg)
+
+     Sin returns the sine of arg in radians. See also Cos() and Tan()
+
+Sleep(secs)
+
+     Sleep will delay for secs seconds. Similar to the Unix C sleep()
+     function. See also the USleep() function.
+
+Solid_Close(connection_id)
+
+     Solid_Close will close down the connection to the Solid server
+     associated with the given connection identifier.
+
+     This function is only available if Solid support has been enabled in
+     PHP.
+
+Solid_Connect(data source name, username, password)
+
+     Solid_Connect opens a connection to a Solid server. Each of the
+     arguments should be a quoted string. The first parameter (data source
+     name) can be an empty string, resulting in a connection to the default
+     server on the localhost. This function returns a connection_id. This
+     identifier is needed by other Solid functions. You can have multiple
+     connections open at once. This function will return 0 on error.
+
+     This function is only available if Solid support has been enabled in
+     PHP.
+
+Solid_Exec(connection_id, query_string)
+
+     Solid_Exec will send an SQL statement to the Solid server specified by
+     the connection_id. The connection_id must be a valid identifier that
+     was returned by Solid_Connect. The return value of this function is an
+     identifier to be used to access the results by other Solid functions.
+     This function will return 0 on error. It will return 1 when the command
+     executed correctly but are not expected to returned data (insert or
+     update commands, for example). Note that selects which return no data
+     will still return a valid result greater than 1.
+
+     This function is only available if Solid support has been enabled in
+     PHP.
+
+Solid_FetchRow(result_id)
+
+     Solid_FetchRow fetches a row of the data that was returned by
+     Solid_Exec. After Solid_FetchRow is called, the fields of that row can
+     be access with Solid_Result. Every time Solid_FetchRow is called a new
+     row can be accessed by Solid_Result. If Solid_FetchRow was succesful
+     (there was a new row), 1 is returned, if there are no more rows,
+     Solid_FetchRow will return 0. The return value of Solid_FetchRow can be
+     used as the condition of a while loop.
+
+     This function is only available if Solid support has been enabled in
+     PHP.
+
+Solid_FieldName(result_id, field_number)
+
+     Solid_FieldName will return the name of the field occupying the given
+     column number in the given Solid result identifier. Field numbering
+     starts from 0.
+
+     This function is only available if Solid support has been enabled in
+     PHP.
+
+Solid_FieldNum(result_id, field_name)
+
+     Solid_FieldNum will return the number of the column slot that
+     corresponds to the named field in the given Solid result identifier.
+     Field numbering starts at 0. This function will return -1 on error.
+
+     This function is only available if Solid support has been enabled in
+     PHP.
+
+Solid_FreeResult(result_id)
+
+     Solid_FreeResult only needs to be called if you are worried about using
+     too much memory while your script is running. All result memory will
+     automatically be freed when the script is finished. But, if you are
+     sure you are not going to need the result data anymore in a script, you
+     may call Solid_FreeResult with the result identifier as an argument and
+     the associated result memory will be freed.
+
+     This function is only available if Solid support has been enabled in
+     PHP.
+
+Solid_NumFields(result_id)
+
+     Solid_NumFields will return the number of fields (columns) in a Solid
+     result. The argument is a valid result identifier returned by
+     Solid_Exec. This function will return -1 on error.
+
+     This function is only available if Solid support has been enabled in
+     PHP.
+
+Solid_NumRows(result_id)
+
+     Solid_NumRows will return the number of rows in a Solid result. The
+     argument is a valid result identifier returned by Solid_Exec. This
+     function will return -1 on error. Large Caveat: The SOLID SQL server
+     uses ODBC as it's primary (and only) interface. SolidNumRows() uses
+     SQLRowCount at the low-level to get the number of rows. SQLRowCount
+     follows the age-old Microsoft tradition of unnecessary limitations,
+     strange exceptions and other odd things. This means that the function
+     will only return the number of rows affected by an INSERT, UPDATE or a
+     DELETE clause. No SELECT! As a workaround you can try the count()
+     statement of SQL or a while-loop that counts the number of rows. If you
+     need Solid_NumRows() to figure out how many records to read after a
+     SELECT clause, try checking the return value from Solid_FetchRow()
+     instead. So instead of:
+
+          $num = Solid_NumRows();
+         $i=0;
+         while ($i < $num) {
+             /* print results... */
+             $i++;
+         }
+
+     you might try:
+
+         while(Solid_FetchRow($result)) {
+             /* print results... */
+         }
+
+     This function is only available if Solid support has been enabled in
+     PHP.
+
+Solid_Result(result_id, field name/index)
+
+     Solid_Result will return values from a result identifier produced by
+     Solid_Exec. The field name specify what cell in the row to return.
+     Instead of naming the field, you may use the field index as an unquoted
+     number. Field indices start from 0.
+
+     This function is only available if Solid support has been enabled in
+     PHP.
+
+Sort(array)
+
+     Sort is used to sort a PHP array in ascending order. To sort in
+     descending order, use the RSort() function. It understands the three
+     variable types and will sort alphabetically if the array contains
+     strings, and numerically if the array contains numbers. In the case of
+     an array which contains a mixture of types, the first type in the array
+     will specify the sort method. Note that if you are going to sort an
+     associative array, you should use the ASort() function.
+
+Soundex(string)
+
+     This function takes a string argument and returns the soundex key for
+     the string. Soundex keys have the property that words pronounced
+     similarly produce the same soundex key, and can thus be used to
+     simplify searches in databases where you know the pronunciation but not
+     the spelling. This soundex function returns a string 4 characters long,
+     starting with a letter.
+     This particular soundex function is one described by Donald Knuth in
+     "The Art Of Computer Programming, vol. 3: Sorting And Searching",
+     Addison-Wesley (1973), pp. 391-392.
+     Example:
+
+        Euler and Ellery map to E460
+        Gauss and Ghosh map to G200
+        Hilbert and Heilbronn map to H416
+        Knuth and Kant map to K530
+        Lloyd and Ladd map to L300
+        Lukasiewicz and Lissajous map to L222
+
+
+Sprintf(format,arg [,arg,arg,arg,arg])
+
+     Sprintf returns the string created by the formatted output defined by
+     the format argument and arg. It is similar to the formatted version of
+     the echo command, except this just returns the string while echo
+     displays it. It is also similar to the C function by the same name. The
+     difference being that this version does not accept more than 5 arg
+     arguments. If you need to format more than 5 arguments into a single
+     string, simply call sprintf() multiple times for each group of
+     arguments. Note that the type of the argument doesn't affect the
+     output. The argument type is automagically converted to match the type
+     specified in the format string.
+
+Sqrt(arg)
+
+     Sqrt returns the square root of arg.
+
+Srand(integer)
+
+     Srand seeds the random number generator. This function takes any
+     integer as an argument. One choice for a seed value is to use the date
+     function to give you the current number of seconds past the minute.
+     Note that this function does not return a value! This function simply
+     seeds the random number generator for subsequent calls to the rand()
+     function. eg.
+
+             <?srand(date("s"))>
+
+strchr(string,arg)
+
+     strchr and strstr are actually identical functions. They can be used
+     interchangeably and both are included for completeness sake. They will
+     return the portion of the string argument starting at the point where
+     the given sub-string is found. For example, in the string, "This is an
+     example string" above, the call: <?echo strchr($string,"an ")> would
+     return the string: "an example string".
+
+strtr(input,set1,set2)
+     strtr() translates each character of "string" that is in "set1" to the
+     corresponding character in "set2". Characters not in set1 are passed
+     through unchanged. When a character appears more than once in "set1"
+     and the corresponding characters in "set2" are not all the same, only
+     the final one is used. When one of "set1" or "set2" is longer, longer
+     "set?" is truncated to length of shorter "set?".
+
+StripSlashes(arg)
+
+     StripSlashes unescapes the string argument. See also AddSlashes().
+
+strlen(string)
+
+     strlen returns the length of the string.
+
+strrchr(string,arg)
+
+     strrchr will search for a single character starting at the end of the
+     argument string and working its way backwards. It returns the string
+     starting with the search character if the character was found and an
+     empty string if it wasn't.
+
+strstr(string,arg)
+
+     strstr and strchr are actually identical functions. They can be used
+     interchangeably and both are included for completeness sake. They will
+     return the portion of the string argument starting at the point where
+     the given sub-string is found. For example, in the string, "This is an
+     example string" above, the call: <?echo strstr($string,"an ")> would
+     return the string: "an example string".
+
+strtok(string,arg)
+
+     strtok is used to tokenize a string. That is, if you have a string like
+     "This is an example string" you could tokenize this string into its
+     individual words by using the space character as the token. You would
+     use the following script code:
+
+             <?
+               $string = "This is an example string";
+               $tok = strtok($string," ");
+               while($tok);
+                       echo "Word=$tok<br>";
+                       $tok = strtok(" ");
+               endwhile;
+             >
+
+     Note that only the first call to strtok uses the string argument. Every
+     subsequent call to strtok only needs the token to use, as it keeps
+     track of where it is in the current string. To start over, or to
+     tokenize a new string you simply call strtok with the string argument
+     again to initialize it. Note that you may put multiple tokens in the
+     arg parameter. The string will be tokenized when any one of the
+     characters in the argument are found.
+
+strtolower(string)
+
+     strtolower converts the string argument to all lower case characters.
+
+strtoupper(string)
+
+     strtoupper converts the string argument to all upper case characters.
+
+strval(variable)
+
+     strval returns the string value of the variable. See also the intval()
+     and doubleval() functions.
+
+substr(string, start, length)
+
+     substr returns a part of the given string. The start position is given
+     by the start argument. The first position in a string is position 0.
+     And the length argument specifies the number of characters to return
+     from the start position.
+
+sybSQL_CheckConnect()
+
+     This function returns 1 if the connection to the database has been
+     established and 0 otherwise.
+
+sybSQL_DBuse(database)
+
+     This function issues a Sybase Transact-SQL use command for the
+     specified database. The only argument to the function is the name of
+     the database to use. Example: sybsql_dbuse("pubs2");
+
+     The function returns 1 on success and 0 on failure.
+
+sybSQL_Connect()
+
+     This function opens a network connection to the sybase server. This
+     function depends on several environment variables which must be set by
+     the caller before calling this function.
+
+     The environment variables are:
+
+     DSQUERY - the alias of the sybase server as defined in the sybase
+     interface file.
+     DBUSER - connect to the sybase server as this user.
+     DBPW - password of the user.
+
+     These variables can be set in several ways. If php/fi is running as a
+     CGI program, then a shell wrapper can be used to set these variables or
+     you can set these variables directly in the HTML page using the builtin
+     PHP/FI function putenv(). Instead of using the values directly in
+     putenv(), the values can be obtained from form input. The variables can
+     be defined in a file and included in the html files with PHP/FI include
+     statement.
+
+     The function returns 1 on success and 0 on failure.
+
+sybSQL_Exit()
+
+     This function forces a Sybase connection to be shut down. If not
+     called, the connection will automatically be closed when the PHP page
+     has been fully parsed, so calling this function is optional.
+
+sybSQL_Fieldname(index)
+
+     This function returns the field name of a regular result column. The
+     argument to the function is the field index. Example:
+     sybsql_fieldname(0);. NOTE: the field index starts at 0.
+
+     If the the result column does not have any name, the function returns
+     an empty string ("").
+
+sybSQL_GetField(field)
+
+     This function gets the value of a specific column of the current result
+     row. The only argument to the function is the string specifying the
+     field. Example: $value=sybsql_getfield("@10"); NOTE: sybsql_nextrow()
+     must be called before calling this function. sybsql_nextrow() must be
+     called if the row pointer needs to be incremented, because this
+     function only reads the current row in the row buffer.
+
+     If the specified column has a value, the function returns the value as
+     a string otherwise the function returns an empty string ("").
+
+sybSQL_IsRow()
+
+     This function indicates if the current SQL command returned any rows.
+
+     The function returns 1 if the SQL command returned any rows and 0 if
+     the command didn't return any rows.
+
+sybSQL_NextRow()
+
+     This function increments the row pointer to the next result row.
+
+     The function returns 1 as long as there are rows left to read. If there
+     are no more rows left to read or in case of error the function returns
+     0.
+
+sybSQL_NumFields()
+
+     This function returns the number of fields in a current result row.
+
+     The function returns the number of rows in the current result row. If
+     there are no fields, the function returns 0.
+
+sybSQL_NumRows()
+
+     This function returns the number of rows in the current result buffer.
+     NOTE: when this function is called, it will seek to the first row right
+     away, then it will call dbnextrow() until there are no more rows and
+     increment a internal counter to calculate the number of rows in the
+     result buffer. Then it points back to the very first row. Therefore,
+     after calling this function row counter always points to the very first
+     row. It's ugly but I don't know any other way at this time.
+
+     If there are no rows in the result buffer, the function will return 0.
+
+sybSQL_Query()
+
+     This function submits a Sybase SQL query request to the server. The
+     only argument to the function is the query string. Example:
+     $rc=sybsql_query("select * from authors");
+
+     The function returns 1, if the query is passed successfully and returns
+     0 if the request fails.
+
+sybSQL_Result(string)
+
+     This function prints specific fields of the current result row. The
+     only argument to the function is a string which holds information about
+     the fields to be printed. A field is specified with a @ followed by a
+     number. For example, @0 means first row, @10 means 11th row. Note that
+     the field number starts at 0. The function is perhaps best illustrated
+     with a complete example:
+
+     <?
+         /*
+         ** assuming all the necessary variables for
+         ** connection is already set. please note, NO error checking is
+         ** done. You should always check return code of a function.
+         */
+
+         /* connect */
+         $rc=sybsql_connect();
+
+         /* use the pub2 database */
+         $rc=sybsql_dbuse("pubs2");
+
+         /* send the SQL request */
+         $rc=sybsql_query("select * from authors");
+         $i=0;
+
+         /* find the no of rows returned */
+         $nrows=sybsql_numrows();
+
+         /* start table */
+         echo "<table border>\n";
+         /*
+         ** print only first and 2nd field
+         */
+         while($i<$nrows) {
+             sybsql_result("<tr><td>@0</td>@1</td></tr>\n");
+             $i++;
+         }
+         /* end table */
+         echo "</table>\n";
+     >
+
+     The above example uses HTML table to format the output. Of course, any
+     other valid HTML tags can be used.
+
+sybSQL_Result_All()
+
+     This function prints all rows in the current result buffer. The result
+     is printed in a hard coded HTML table format. Note that this function
+     should not be called inside a loop. The function will print the name of
+     the columns if there are any column headings in the output.
+
+sybSQL_Seek(row)
+
+     This function sets the requested row number as the current row in the
+     row buffer. The only argument to the function is the row number.
+     Example: $rc=sybsql_seek(10); Note, row number starts at 0.
+
+     The function returns 1 if the seek succeeds and 0 if the seek fails.
+     When all of the rows in the current result buffer have been visited,
+     the row pointer points to the last row. If it is needed to go backward
+     and visit some more rows, this function can be used for this purpose.
+
+Symlink(target,link)
+
+     Symlink() creates a symbolic link. See the Link() function to create
+     hard links.
+
+Syslog(level,message)
+
+     Syslog() logs messages to the system using UNIX's syslog(3) feature.
+     See your UNIX man page for more details. See also InitSyslog(),
+     OpenLog() and CloseLog().
+
+System(command_string [,return_var])
+
+     System is just like the C system() command in that it executes the
+     given unix command and outputs the result. If a variable is provided as
+     the second argument, then the return status code of the executed unix
+     command will be written to this variable. Note, that if you are going
+     to allow data coming from user input to be passed to this System
+     function, then you should be using the EscapeShellCmd() function to
+     make sure that users cannot trick the system into executing arbitrary
+     commands. The System() call also automatically flushes the Apache
+     output buffer after each line of output if PHP is running as an Apache
+     module. If you need to execute a command and have all the data from the
+     command passed directly back without any interference, use the
+     PassThru() function. See also the Exec function.
+
+Tan(arg)
+
+     Sin returns the tangent of arg in radians. See also Sin() and Cos()
+
+TempNam(path, prefix)
+
+     TempNam returns a unique filename located in the directory indicated by
+     path with filename prefix given by prefix. It is identical to the Unix
+     C tempnam() function.
+
+Time()
+
+     Time simply returns the current local time in seconds since Unix epoch
+     (00:00:00 Jan. 1 1970). It is equivalent to calling Date("U"). If you
+     need better than per-second granularity, use the Microtime function.
+
+Umask([mask])
+
+     Umask(mask) sets PHP's umask to mask & 0777 and returns the old umask.
+     If PHP/FI is an Apache module, Apache's old umask is restored when
+     PHP/FI has finished. mask must be specified in octal notation, like for
+     ChMod(). Umask() without arguments simply returns the current umask.
+
+UniqId()
+
+     UniqId returns a prefixed unique identifier based on current time in
+     microseconds. The prefix can be useful for instance if you generate
+     identifiers simultaneously on several hosts that might happen to
+     generate the identifier at the same microsecond. The prefix can be up
+     to 114 characters long.
+
+Unlink(filename)
+
+     Unlink deletes the given filename. Similar to the Unix C unlink()
+     function. See the RmDir() function for removing directories.
+
+UnSet($var)
+
+     UnSet undefines the given variable. In the case of an array, the entire
+     array is cleared. Individual array elements may also be unset.
+
+UrlDecode(arg)
+
+     UrlDecode decodes a string encoded with the UrlEncode function. In
+     typical use, it is not necessary to decode URL Encoded strings because
+     these are automatically decoded when strings are passed between pages.
+     However, for completeness sake, this function has been included.
+
+UrlEncode(arg)
+
+     UrlEncode encodes any characters from arg which are not one of
+     "a-zA-Z0-9_-." by replacing them with %xx where xx is their ASCII value
+     in hexadecimal. The encoded string is returned.
+
+USleep(microsecs)
+
+     Sleep will delay for the given number of microseconds. Similar to the
+     Unix C usleep() function. See also the Sleep() function.
+
+Virtual(filename)
+
+     Virtual is an Apache-specific function which is equivalent to
+     <!--#include virtual...--> in mod_include. It performs an Apache
+     sub-request. It is useful for including CGI scripts or .shtml files, or
+     anything else that you would parse through Apache (for .phtml files,
+     you'd probably want to use <?Include>.
+
