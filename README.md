@@ -16,6 +16,7 @@ Note that each implementation was not the only php-mode at the time.
  * 2009-2012: [Brian Zwahr's php+-mode](https://github.com/echosa/phpplus-mode)
  * 2011: [Philippe Ivaldi's pi-php-mode](https://github.com/pivaldi/pi-php-mode) (Successor of Aaron's)
  * 2011-2017: Eric James-Michael Ritz's php-mode (Successor of Aaron's)
+ * 2014: [Debian's php-elisp](debian) (Variant of [Eric's php-mode 1.13.5](https://github.com/emacs-php/php-mode/issues/430))
  * 2017-*(active)* [Emacs-PHP's php-mode](https://github.com/emacs-php/php-mode)
  * 2019-*(active)* [Christian Johansson's phps-mode](https://github.com/cjohansson/emacs-phps-mode)
 
