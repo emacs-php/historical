@@ -12,6 +12,7 @@ Note that each implementation was not the only php-mode at the time.
  * 1999-2003: Turadg Aleahmad's php-mode (The origin of `emacs-php/php-mode`)
  * 2006-2007: [Vincent DEBOUT's php-mode](deboutv)
  * 2007-2008: [Aaron S. Hawley's php-mode](sourceforge) (Successor of Turadg's)
+ * 2009: [David House's php-mode-improved](dmhouse) (Successor of Aaron's)
  * 2008: [Ahmet Usal's php-mode-new](mewde) (Successor of Aaron's)
  * 2009-2012: [Brian Zwahr's php+-mode](https://github.com/echosa/phpplus-mode)
  * 2010: [Ranko Radonic's php-mode](https://github.com/rradonic/php-mode) (Successor of Aaron's)
